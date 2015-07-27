@@ -1,0 +1,9 @@
+.errorlog-li a {padding: 0 !important;margin-right: 7px !important;}
+.errorlog-li a#errorlog-result {width: 25px !important;}
+.errorlog-li a span {color: red; background-color: white;padding: 5px;}
+#errorlog-box {background-color: #FFF;border: 2px solid #DDD;box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);position: absolute;width: 1200px;z-index: 5000;}
+#errorlog-box-title {background-color: #EFEFEF;padding: 10px 5px;margin: 3px;}
+#errorlog-box-body {height: 500px;padding: 10px 8px;overflow: auto;}
+#errorlog-box-title button {position: absolute;top: 5px;padding: 3px 6px !important;}
+#clearlog-btn {right: 35px;}
+#close-btn {right: 8px;}
