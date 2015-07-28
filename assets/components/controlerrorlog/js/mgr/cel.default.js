@@ -10,25 +10,41 @@ function showLog(){
 			name: "log",
 			hideLabel: true,
 			id: "window-error-log-content",
-			value: config.log,
+			value: cel_config.log,
 			readOnly: true,
 			height: "97%",
 			width: "99%",
-			hidden: config.tooLarge ? true : false
+			hidden: cel_config.tooLarge ? true : false
 		},{
-			html: "<p>"+_("error_log_too_large",{name: config.name})+"</p>",
+			html: "<p>"+_("error_log_too_large",{name: cel_config.name})+"</p>",
 			id: "too-large-text",
 			border: false,
-			hidden: config.tooLarge ? false : true
+			hidden: cel_config.tooLarge ? false : true
 		},{
 			xtype: "button",
-			text: _("error_log_download",{size: config.size}),
+			text: _("error_log_download",{size: cel_config.size}),
 			cls: "primary-button",
 			id: "error-log-download-btn",
 			style: "margin-top: 15px;",
-			hidden: config.tooLarge ? false : true,
+			hidden: cel_config.tooLarge ? false : true,
 			handler: function () {location.href = MODx.config.connectors_url+"?action=system/errorlog/download&HTTP_MODAUTH="+MODx.siteId;},
 			scope: this
+		},{
+			html: "<p>"+_("error_log_last_lines",{last: cel_config.last})+"</p>",
+			id: "error-log-last-lines",
+			style: "margin-top: 15px;",
+			border: false,
+			hidden: cel_config.tooLarge ? false : true
+		},{
+			xtype: "textarea",
+			name: "log-last",
+			hideLabel: true,
+			id: "error-log-last-lines-content",
+			value: cel_config.log,
+			readOnly: true,
+			height: "60%",
+			width: "99%",
+			hidden: cel_config.tooLarge ? false : true
 		}],
 		buttons: [{
 			text: _("error_log"),
@@ -39,30 +55,36 @@ function showLog(){
 			id: "error-log-refresh-btn",
 			handler: function () {
 				MODx.Ajax.request({
-					url: config.connector_url
+					url: cel_config.connector_url
 					,params: {
-						action: "mgr/errorlog/get"
+						action: "mgr/errorlog/get",
+						last: cel_config.last
 					}
 					,listeners: {
 						"success": {fn:function(r) {
-							config = r.object;
-							Ext.getCmp("window-error-log-content").setValue(config.log);
-							//document.getElementById("errorlog-result").innerHTML = config.empty ? _("no") : _("yes");
-							if (config.empty) {
+							cel_config = r.object;
+							Ext.getCmp("window-error-log-content").setValue(cel_config.log);
+							//document.getElementById("errorlog-result").innerHTML = cel_config.empty ? _("no") : _("yes");
+							if (cel_config.empty) {
 								document.getElementById("errorlog-result").innerHTML = _("no");
 								Ext.getCmp("error-log-clear-btn").disable();
 							} else {
 								document.getElementById("errorlog-result").innerHTML = _("yes");
 								Ext.getCmp("error-log-clear-btn").enable();
 							}
-							if (config.tooLarge) {
+							if (cel_config.tooLarge) {
 								Ext.getCmp("window-error-log-content").hide();
 								Ext.getCmp("too-large-text").show();
-								Ext.getCmp("error-log-download-btn").setText(_("error_log_download",{size: config.size})).show();
+								Ext.getCmp("error-log-download-btn").setText(_("error_log_download",{size: cel_config.size})).show();
+								Ext.getCmp("error-log-last-lines").html = _("error_log_last_lines",{last: cel_config.last});
+								Ext.getCmp("error-log-last-lines").show();
+								Ext.getCmp("error-log-last-lines-content").setValue(cel_config.log).show();
 							} else {
 								Ext.getCmp("window-error-log-content").show();
 								Ext.getCmp("too-large-text").hide();
 								Ext.getCmp("error-log-download-btn").hide();
+								Ext.getCmp("error-log-last-lines").hide();
+								Ext.getCmp("error-log-last-lines-content").hide();
 							}
 						}}
 					}
@@ -71,7 +93,7 @@ function showLog(){
 		},{
 			text: _("clear"),
 			id: "error-log-clear-btn",
-			disabled: config.empty ? true : false,
+			disabled: cel_config.empty ? true : false,
 			handler: function () {
 				MODx.Ajax.request({
 					url: MODx.config.connectors_url
@@ -82,13 +104,13 @@ function showLog(){
 						"success": {fn:function(r) {
 							var log = Ext.getCmp("window-error-log-content");
 							log.setValue(" ");
-							config.log = " ";
+							cel_config.log = " ";
 							Ext.getCmp("error-log-clear-btn").disable();
-							if (config.tooLarge) {
+							if (cel_config.tooLarge) {
 								log.show();
 								Ext.getCmp("too-large-text").hide();
 								Ext.getCmp("error-log-download-btn").hide();
-								config.tooLarge = false;
+								cel_config.tooLarge = false;
 							}
 							document.getElementById("errorlog-result").innerHTML = _("no");
 						}}
@@ -112,7 +134,7 @@ Ext.onReady(function() {
 		firstLi = usermenuUl.firstChild,
 		errorlogLi = document.createElement("LI");
 
-	errorlogLi.innerHTML = "<a href=\"javascript:void(0)\" onclick=\"return false;\">"+_("errors")+":</a><a id=\"errorlog-result\" href=\"javascript:showLog()\" title=\""+_("errors_title")+"\">"+checkErrors(config.empty)+"</a>";
+	errorlogLi.innerHTML = "<a href=\"javascript:void(0)\" onclick=\"return false;\">"+_("errors")+":</a><a id=\"errorlog-result\" href=\"javascript:showLog()\" title=\""+_("errors_title")+"\">"+checkErrors(cel_config.empty)+"</a>";
 	errorlogLi.className = "errorlog-li";
 	usermenuUl.insertBefore(errorlogLi, firstLi);
 });
