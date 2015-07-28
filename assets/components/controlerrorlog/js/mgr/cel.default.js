@@ -64,12 +64,11 @@ function showLog(){
 						"success": {fn:function(r) {
 							cel_config = r.object;
 							Ext.getCmp("window-error-log-content").setValue(cel_config.log);
-							//document.getElementById("errorlog-result").innerHTML = cel_config.empty ? _("no") : _("yes");
 							if (cel_config.empty) {
-								document.getElementById("errorlog-result").innerHTML = _("no");
+								document.getElementById("errorlog-result").innerHTML = _("error_log_no");
 								Ext.getCmp("error-log-clear-btn").disable();
 							} else {
-								document.getElementById("errorlog-result").innerHTML = _("yes");
+								document.getElementById("errorlog-result").innerHTML = _("error_log_yes");
 								Ext.getCmp("error-log-clear-btn").enable();
 							}
 							if (cel_config.tooLarge) {
@@ -112,7 +111,7 @@ function showLog(){
 								Ext.getCmp("error-log-download-btn").hide();
 								cel_config.tooLarge = false;
 							}
-							document.getElementById("errorlog-result").innerHTML = _("no");
+							document.getElementById("errorlog-result").innerHTML = _("error_log_no");
 						}}
 					}
 				});
@@ -128,7 +127,7 @@ function showLog(){
 
 Ext.onReady(function() {
 	function checkErrors(empty){
-		return empty ? _("no") : _("yes");
+		return empty ? _("error_log_no") : _("error_log_yes");
 	}
 	var usermenuUl = document.getElementById("modx-user-menu"),
 		firstLi = usermenuUl.firstChild,

@@ -1,6 +1,6 @@
 <?php
-$_lang['no'] = 'No';
-$_lang['yes'] = '<span>Yes</span>';
+$_lang['error_log_no'] = 'No';
+$_lang['error_log_yes'] = '<span>Yes</span>';
 $_lang['errors'] = 'Errors';
 $_lang['refresh'] = 'Refresh';
 $_lang['clear'] = 'Clear';
