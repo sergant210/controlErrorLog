@@ -6,6 +6,14 @@ This Extra adds a new feature to manager interface - the ability to control the 
 
 Now you will not miss any mistakes
 
+If the log is too large you can see last 10 lines of it. 
+[![](https://file.modx.pro/files/2/6/0/2604892c39ed8050bfc6e4147f3cfb1cs.jpg)](https://file.modx.pro/files/2/6/0/2604892c39ed8050bfc6e4147f3cfb1c.png)
+
+You can specify any number of lines. This is configured in the plugin.  
+```
+$last = 10;
+```
+
 ##Bugs and improvements
 
 Feel free to suggest ideas/improvements/bugs on GitHub:
