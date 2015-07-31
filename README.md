@@ -14,6 +14,7 @@ You can specify any number of lines. This is configured in the plugin.
 $last = 10;
 ```
 
+**Important!** The error indicator is displayed only for users with permission "error_log_view".
 ##Bugs and improvements
 
 Feel free to suggest ideas/improvements/bugs on GitHub:
