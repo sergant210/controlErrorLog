@@ -47,10 +47,6 @@ function showLog(){
 			hidden: cel_config.tooLarge ? false : true
 		}],
 		buttons: [{
-			text: _("error_log"),
-			handler: function () { location.href = "?a=system/event" },
-			scope: this
-		}, {
 			text: _("refresh"),
 			id: "error-log-refresh-btn",
 			handler: function () {
@@ -65,10 +61,10 @@ function showLog(){
 							cel_config = r.object;
 							Ext.getCmp("window-error-log-content").setValue(cel_config.log);
 							if (cel_config.empty) {
-								document.getElementById("errorlog-result").innerHTML = _("error_log_no");
+								document.getElementById("errorlog-link").className = "errorlog-empty";
 								Ext.getCmp("error-log-clear-btn").disable();
 							} else {
-								document.getElementById("errorlog-result").innerHTML = _("error_log_yes");
+								document.getElementById("errorlog-link").className = "errorlog-notempty";
 								Ext.getCmp("error-log-clear-btn").enable();
 							}
 							if (cel_config.tooLarge) {
@@ -102,8 +98,8 @@ function showLog(){
 					,listeners: {
 						"success": {fn:function(r) {
 							var log = Ext.getCmp("window-error-log-content");
-							log.setValue(" ");
-							cel_config.log = " ";
+							log.setValue("");
+							cel_config.log = "";
 							Ext.getCmp("error-log-clear-btn").disable();
 							if (cel_config.tooLarge) {
 								log.show();
@@ -111,7 +107,7 @@ function showLog(){
 								Ext.getCmp("error-log-download-btn").hide();
 								cel_config.tooLarge = false;
 							}
-							document.getElementById("errorlog-result").innerHTML = _("error_log_no");
+							document.getElementById("errorlog-link").className = "errorlog-empty";
 						}}
 					}
 				});
@@ -126,14 +122,14 @@ function showLog(){
 }
 
 Ext.onReady(function() {
-	function checkErrors(empty){
-		return empty ? _("error_log_no") : _("error_log_yes");
+	function getClass(empty){
+		return empty ? "errorlog-empty" : "errorlog-notempty";
 	}
 	var usermenuUl = document.getElementById("modx-user-menu"),
 		firstLi = usermenuUl.firstChild,
 		errorlogLi = document.createElement("LI");
 
-	errorlogLi.innerHTML = "<a href=\"javascript:void(0)\" onclick=\"return false;\">"+_("errors")+":</a><a id=\"errorlog-result\" href=\"javascript:showLog()\" title=\""+_("errors_title")+"\">"+checkErrors(cel_config.empty)+"</a>";
+	errorlogLi.innerHTML = "<a id=\"errorlog-link\" class=\""+getClass(cel_config.empty)+"\" href=\"javascript:showLog()\" title=\""+_("errors_title")+"\"><i class=\"celicon\"></i></a>";
 	errorlogLi.className = "errorlog-li";
 	usermenuUl.insertBefore(errorlogLi, firstLi);
 });
