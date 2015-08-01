@@ -24,7 +24,6 @@
 }
 .errorlog-empty i:before {
 	content: "\f058";
-	color: #00cf00;
 }
 .errorlog-notempty i:before {
 	content: "\f071";
