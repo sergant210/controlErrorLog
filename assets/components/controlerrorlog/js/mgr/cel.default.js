@@ -111,10 +111,11 @@ function showLog(){
 						}}
 					}
 				});
-			}, scope: this
+			},
+			scope: this
 		},{
 			text: _("close"),
-			handler: function () { w.close(); },
+			handler: function() { w.close(); },
 			scope: this
 		}]
 	}).show();

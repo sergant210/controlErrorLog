@@ -1,11 +1,15 @@
 Changelog for controlErrorLog.
 
+1.0.2-pl
+==============
+- Removed the table creation script.
+
 1.0.1-pl
 ==============
 - Changed the appearance of the error indicator.
 - Now the error indicator is displayed only for users with permission "error_log_view".
 - Removed Error Log button.
--  Added language support for Dutch.
+- Added language support for Dutch.
 
 1.0.0-pl
 ==============
