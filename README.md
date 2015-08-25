@@ -16,7 +16,7 @@ You can specify any number of lines in the system settings.
 **auto_refresh** - Check the state of the error log with the specified frequency. 
 **refresh_freq** - Error log refresh frequency in seconds. By default, set to 60 seconds.
   
-####Important!#### 
+####Important!
 The error indicator is displayed only for users with permission "error_log_view" and administrators with 'sudo'.
 
 ##Bugs and improvements
