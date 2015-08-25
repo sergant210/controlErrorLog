@@ -12,9 +12,9 @@ If the log is too large you can see last 15 (by default) lines of it.
 You can specify any number of lines in the system settings. 
  
 ## System settings
-**last_lines** - Displays the specified number of last lines when the error log is too large to display.   
-**auto_refresh** - Check the state of the error log with the specified frequency.   
-**refresh_freq** - Error log refresh frequency in seconds. By default, set to 60 seconds.
+* **last_lines** - Displays the specified number of last lines when the error log is too large to display.   
+* **auto_refresh** - Check the state of the error log with the specified frequency.   
+* **refresh_freq** - Error log refresh frequency in seconds. By default, set to 60 seconds.
   
 ####Important!
 The error indicator is displayed only for users with permission "error_log_view" and administrators with 'sudo'.
