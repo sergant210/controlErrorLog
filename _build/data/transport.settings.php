@@ -2,13 +2,22 @@
 
 $settings = array();
 
-$tmp = array(/*
-	'some_setting' => array(
-		'xtype' => 'combo-boolean',
-		'value' => true,
-		'area' => 'controlerrorlog_main',
+$tmp = array(
+	'last_lines' => array(
+		'xtype' => 'numberfield',
+		'value' => 15,
+		'area' => 'controlerrorlog.main',
 	),
-	*/
+    'refresh_freq' => array(
+        'xtype' => 'numberfield',
+        'value' => 60,
+        'area' => 'controlerrorlog.main',
+    ),
+    'auto_refresh' => array(
+        'xtype' => 'combo-boolean',
+        'value' => true,
+        'area' => 'controlerrorlog.main',
+    ),
 );
 
 foreach ($tmp as $k => $v) {
@@ -16,7 +25,7 @@ foreach ($tmp as $k => $v) {
 	$setting = $modx->newObject('modSystemSetting');
 	$setting->fromArray(array_merge(
 		array(
-			'key' => 'controlerrorlog_' . $k,
+			'key' => 'controlerrorlog.' . $k,
 			'namespace' => PKG_NAME_LOWER,
 		), $v
 	), '', true, true);

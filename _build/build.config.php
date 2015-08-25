@@ -4,9 +4,9 @@
 define('PKG_NAME', 'controlErrorLog');
 define('PKG_NAME_LOWER', strtolower(PKG_NAME));
 
-define('PKG_VERSION', '1.0.2');
+define('PKG_VERSION', '1.0.3');
 define('PKG_RELEASE', 'pl');
-define('PKG_AUTO_INSTALL', false);
+define('PKG_AUTO_INSTALL', true);
 define('PKG_NAMESPACE_PATH', '{core_path}components/' . PKG_NAME_LOWER . '/');
 
 /* define paths */
@@ -37,7 +37,7 @@ define('BUILD_ACTION_UPDATE', false);
 define('BUILD_SETTING_UPDATE', false);
 define('BUILD_CHUNK_UPDATE', false);
 
-define('BUILD_SNIPPET_UPDATE', true);
+define('BUILD_SNIPPET_UPDATE', false);
 define('BUILD_PLUGIN_UPDATE', true);
 //define('BUILD_EVENT_UPDATE', true);
 //define('BUILD_POLICY_UPDATE', true);
@@ -49,7 +49,7 @@ define('BUILD_SNIPPET_STATIC', false);
 define('BUILD_PLUGIN_STATIC', false);
 
 $BUILD_RESOLVERS = array(
-	'tables',
-	'chunks',
+	//'tables',
+	//'chunks',
 	//'setup',
 );

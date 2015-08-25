@@ -1,5 +1,13 @@
 Changelog for controlErrorLog.
 
+1.0.3-pl
+==============
+- Now the error log is checked for errors every minute (by default). It can be switched off.
+- Add a system setting "Last lines".
+- Add a system setting "Refresh frequency".
+- Add a system setting "Auto refresh".
+- Some improvements - now the window closes with animation, refreshing the error log on opening the window.
+
 1.0.2-pl
 ==============
 - Removed the table creation script.

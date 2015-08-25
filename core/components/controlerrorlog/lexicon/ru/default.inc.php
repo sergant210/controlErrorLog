@@ -1,7 +1,8 @@
 <?php
 $_lang['error_log'] = 'Журнал ошибок';
-$_lang['refresh'] = 'Обновить';
-$_lang['clear'] = 'Очистить';
+$_lang['cel_refresh'] = 'Обновить';
+$_lang['cel_clear'] = 'Очистить';
+$_lang['cel_close'] = 'Закрыть';
 $_lang['errors_title'] = 'Открыть журнал ошибок в новом окне';
 $_lang['error_log_last_lines'] = 'Последние [[+last]] строк.';
 $_lang['error_log_download'] = 'Скачать журнал ошибок ([[+size]]Mb)';
