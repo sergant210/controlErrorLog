@@ -1,5 +1,9 @@
 Changelog for controlErrorLog.
 
+1.0.4-pl
+==============
+- Fixed the error #5.
+
 1.0.3-pl
 ==============
 - Now the error log is checked for errors every minute (by default). It can be switched off.

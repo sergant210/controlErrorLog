@@ -29,7 +29,7 @@ class celSystemErrorLogGetProcessor extends modProcessor
                     $lines = preg_split('/\\r\\n?|\\n/', $content);
                     $content = end($lines);
                     for ($i = 1; $i < $lastLines; $i++) {
-                        while (empty(trim($content, "\n"))) {
+                        while (trim($content) == false) {
                             $content = prev($lines);
                         }
                         $content = prev($lines) . "\n" . $content;
