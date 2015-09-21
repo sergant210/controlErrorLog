@@ -1,5 +1,9 @@
 Changelog for controlErrorLog.
 
+1.0.5-pl
+==============
+- Fixed bug with lexicon strings with some CMPs (#6)
+
 1.0.4-pl
 ==============
 - Fixed the error #5.

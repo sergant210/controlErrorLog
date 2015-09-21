@@ -5,7 +5,7 @@ function showLog() {
 			height: 500,
 			width: 1000,
 			cloaseAction: 'hide',
-			title: _("error_log"),
+			title: _("error_log") ? _("error_log") : 'Error log',
 			stateful: false,
 			buttonAlign: "right",
 			items: [{
@@ -19,13 +19,13 @@ function showLog() {
 				width: "99%",
 				hidden: cel_config.tooLarge ? true : false
 			}, {
-				html: "<p>" + _("error_log_too_large", {name: cel_config.name}) + "</p>",
+				html: _("error_log_too_large") ? _("error_log_too_large", {name: cel_config.name}) : 'The error log at <em>' + cel_config.name + '</em> is too large to be viewed. You can download it via the button below.',
 				id: "too-large-text",
 				border: false,
 				hidden: cel_config.tooLarge ? false : true
 			}, {
 				xtype: "button",
-				text: _("error_log_download", {size: cel_config.size}),
+				text: _("error_log_download") ? _("error_log_download", {size: cel_config.size}) :'Download Error Log',
 				cls: "primary-button",
 				id: "error-log-download-btn",
 				style: "margin-top: 15px;",
@@ -35,7 +35,7 @@ function showLog() {
 				},
 				scope: this
 			}, {
-				html: "<p>" + _("error_log_last_lines", {last: cel_config.last}) + "</p>",
+				html: _("error_log_last_lines") ? _("error_log_last_lines", {last: cel_config.last}) : 'The last '+cel_config.last+' lines.',
 				id: "error-log-last-lines",
 				style: "margin-top: 15px;",
 				border: false,
@@ -52,14 +52,14 @@ function showLog() {
 				hidden: cel_config.tooLarge ? false : true
 			}],
 			buttons: [{
-				text: _("cel_refresh"),
+				text: _("cel_refresh") ? _("cel_refresh") : 'Refresh',
 				id: "error-log-refresh-btn",
 				handler: function () {
 					celWindow._refresh();
 				},
 				scope: this
 			}, {
-				text: _("cel_clear"),
+				text: _("cel_clear") ? _("cel_clear") : 'Clear',
 				id: "error-log-clear-btn",
 				disabled: cel_config.empty ? true : false,
 				handler: function () {
@@ -80,6 +80,8 @@ function showLog() {
 										log.show();
 										Ext.getCmp("too-large-text").hide();
 										Ext.getCmp("error-log-download-btn").hide();
+										Ext.getCmp("error-log-last-lines").hide();
+										Ext.getCmp("error-log-last-lines-content").hide();
 										cel_config.tooLarge = false;
 									}
 									document.getElementById("errorlog-link").className = "errorlog-empty";
@@ -90,7 +92,7 @@ function showLog() {
 				},
 				scope: this
 			}, {
-				text: _("cel_close"),
+				text: _("cel_close") ? _("cel_close") : 'Close',
 				handler: function (w) {
 					celWindow.hide();
 				},
@@ -120,10 +122,12 @@ function showLog() {
 									Ext.getCmp("error-log-clear-btn").enable();
 								}
 								if (cel_config.tooLarge) {
+									var error_log_download = _("error_log_download") ? _("error_log_download", {size: cel_config.size}) : 'Download Error Log ('+cel_config.size+'Mb)',
+										error_log_last_lines = _("error_log_last_lines") ? _("error_log_last_lines", {last: cel_config.last}) : 'The last '+cel_config.last+' lines.';
 									Ext.getCmp("window-error-log-content").hide();
 									Ext.getCmp("too-large-text").show();
-									Ext.getCmp("error-log-download-btn").setText(_("error_log_download", {size: cel_config.size})).show();
-									Ext.getCmp("error-log-last-lines").html = _("error_log_last_lines", {last: cel_config.last});
+									Ext.getCmp("error-log-download-btn").setText(error_log_download).show();
+									Ext.getCmp("error-log-last-lines").html = error_log_last_lines;
 									Ext.getCmp("error-log-last-lines").show();
 									Ext.getCmp("error-log-last-lines-content").setValue(cel_config.log).show();
 								} else {
@@ -166,9 +170,10 @@ Ext.onReady(function() {
 	}
 	var usermenuUl = document.getElementById("modx-user-menu"),
 		firstLi = usermenuUl.firstChild,
-		errorlogLi = document.createElement("LI");
+		errorlogLi = document.createElement("LI"),
+		title = _("errors_title") ? _("errors_title") : 'Open the error log in a new window';
 
-	errorlogLi.innerHTML = "<a id=\"errorlog-link\" class=\""+getClass(cel_config.empty)+"\" href=\"javascript:showLog()\" title=\""+_("errors_title")+"\"><i class=\"celicon\"></i></a>";
+	errorlogLi.innerHTML = "<a id=\"errorlog-link\" class=\""+getClass(cel_config.empty)+"\" href=\"javascript:showLog()\" title=\""+ title +"\"><i class=\"celicon\"></i></a>";
 	errorlogLi.className = "errorlog-li";
 	usermenuUl.insertBefore(errorlogLi, firstLi);
 	if (cel_config.auto_refresh) setInterval(refreshLog,cel_config.refresh_freq);
