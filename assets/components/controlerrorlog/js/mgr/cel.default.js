@@ -25,7 +25,7 @@ function showLog() {
 				hidden: cel_config.tooLarge ? false : true
 			}, {
 				xtype: "button",
-				text: _("error_log_download") ? _("error_log_download", {size: cel_config.size}) :'Download Error Log',
+				text: _("error_log_download") ? _("error_log_download", {size: cel_config.size}) :'Download Error Log ('+cel_config.size+'Mb)',
 				cls: "primary-button",
 				id: "error-log-download-btn",
 				style: "margin-top: 15px;",
