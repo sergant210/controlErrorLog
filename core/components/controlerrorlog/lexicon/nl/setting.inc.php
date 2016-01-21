@@ -1,9 +1,9 @@
 <?php
-$_lang['area_controlerrorlog.main'] = 'Main';
+$_lang['area_controlerrorlog.main'] = 'Algemeen';
 
-$_lang['setting_controlerrorlog.last_lines'] = 'Last lines';
-$_lang['setting_controlerrorlog.last_lines_desc'] = 'Displays specified number of last lines, when the error log is too large to display.';
-$_lang['setting_controlerrorlog.refresh_freq'] = 'Refresh frequency (sec)';
-$_lang['setting_controlerrorlog.refresh_freq_desc'] = 'Error log refresh frequency in seconds.';
-$_lang['setting_controlerrorlog.auto_refresh'] = 'Enable auto refresh';
-$_lang['setting_controlerrorlog.auto_refresh_desc'] = 'On/off auto refresh of error log with specified frequency.';
+$_lang['setting_controlerrorlog.last_lines'] = 'Aantal regels die getoond worden indien foutlog te groot is';
+$_lang['setting_controlerrorlog.last_lines_desc'] = 'Toont dit aantal regels indien het foutlog te groot is om weer te geven.';
+$_lang['setting_controlerrorlog.refresh_freq'] = 'Vernieuwingsfrequentie (in seconden)';
+$_lang['setting_controlerrorlog.refresh_freq_desc'] = 'Na hoeveel seconden de weergave van het foutlog automatisch moet worden ververst.';
+$_lang['setting_controlerrorlog.auto_refresh'] = 'Automatisch vernieuwen';
+$_lang['setting_controlerrorlog.auto_refresh_desc'] = 'Of het foutlog automatisch moet worden ververst na het gespecificeerd aantal seconden.';
