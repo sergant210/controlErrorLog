@@ -7,7 +7,8 @@ $tmp = array(
 		'file' => 'controlerrorlog',
 		'description' => '',
 		'events' => array(
-			'OnManagerPageBeforeRender' => array()
+			'OnManagerPageBeforeRender' => array(),
+			'OnHandleRequest' => array(),
 		)
 	)
 );

@@ -7,3 +7,5 @@ $_lang['setting_controlerrorlog.refresh_freq'] = 'Частота обновле�
 $_lang['setting_controlerrorlog.refresh_freq_desc'] = 'Частота обновления журнала ошибок в секундах.';
 $_lang['setting_controlerrorlog.auto_refresh'] = 'Обновлять автоматически';
 $_lang['setting_controlerrorlog.auto_refresh_desc'] = 'Включает автоматическую проверку состояния журнала ошибок с указанной частотой.';
+$_lang['setting_controlerrorlog.control_frontend'] = 'Контролировать ошибки';
+$_lang['setting_controlerrorlog.control_frontend_desc'] = 'Контролировать журнал ошибок на сайте.';

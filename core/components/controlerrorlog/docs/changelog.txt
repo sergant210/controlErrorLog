@@ -1,4 +1,6 @@
-Changelog for controlErrorLog.
+1.1.0-pl
+==============
+- Added control of the error log in the frontend of the site and admin notification.
 
 1.0.5-pl
 ==============

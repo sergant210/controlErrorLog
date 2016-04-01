@@ -18,6 +18,16 @@ $tmp = array(
         'value' => true,
         'area' => 'controlerrorlog.main',
     ),
+    'control_frontend' => array(
+        'xtype' => 'combo-boolean',
+        'value' => true,
+        'area' => 'controlerrorlog.main',
+    ),
+    'admin_email' => array(
+        'xtype' => 'textfield',
+        'value' => '',
+        'area' => 'controlerrorlog.main',
+    ),
 );
 
 foreach ($tmp as $k => $v) {
