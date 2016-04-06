@@ -1,7 +1,7 @@
 ## controlErrorLog
 
 This Extra adds new features
-* to manager interface the ability to control the error log and view it in a popup window.
+* an ability to control the error log and view it in a popup window in the backend.
 * monitoring the error log in the frontend. Every time when user loads a page controlErrorLog checks the error log for changes. If they have been the email notification will be sent to the specified email.
 
 [![controlErrorLog](https://file.modx.pro/files/a/0/4/a0467354d7e042e6d91109cc894ce66cs.jpg)](https://file.modx.pro/files/a/0/4/a0467354d7e042e6d91109cc894ce66c.png)
