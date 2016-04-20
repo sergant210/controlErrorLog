@@ -13,6 +13,7 @@ switch ($modx->event->name) {
         }
         break;
     case 'OnHandleRequest':
+        if ($modx->context->get('key') == 'mgr') return '';
         $f = $modx->getOption(xPDO::OPT_CACHE_PATH) . 'logs/error.log';
         if (file_exists($f)) {
             $casheHash = $modx->cacheManager->get('error_log');

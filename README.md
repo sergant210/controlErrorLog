@@ -2,7 +2,7 @@
 
 This Extra adds new features
 * an ability to control the error log and view it in a popup window in the backend.
-* monitoring the error log in the frontend. Every time when user loads a page controlErrorLog checks the error log for changes. If they have been the email notification will be sent to the specified email.
+* email notification about changes in the error log. Every time when user loads a page controlErrorLog checks the error log for changes. If they have been the email notification will be sent to the specified email.
 
 [![controlErrorLog](https://file.modx.pro/files/a/0/4/a0467354d7e042e6d91109cc894ce66cs.jpg)](https://file.modx.pro/files/a/0/4/a0467354d7e042e6d91109cc894ce66c.png)
 
@@ -17,8 +17,8 @@ You can specify any number of lines in the system settings.
 * **last_lines** - Displays the specified number of last lines when the error log is too large to display.   
 * **auto_refresh** - Check the state of the error log with the specified frequency.   
 * **refresh_freq** - Error log refresh frequency in seconds. By default, set to 60 seconds.
-* **control_frontend** - If true the error log will be monitored on each site page loading.
-* **admin_email** - Admin email to notify about errors.
+* **control_frontend** - If true the email notification is activated. Must be specified the admin email.
+* **admin_email** - Admin email to notify about changes in the error log. If empty the notification would not work.
   
 ####Important!
 The error indicator is displayed only for users with permission "error_log_view" and administrators with 'sudo'.

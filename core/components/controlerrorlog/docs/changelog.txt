@@ -1,3 +1,7 @@
+1.1.1-pl
+==============
+- Updated the Dutch lexicon.
+
 1.1.0-pl
 ==============
 - Added control of the error log in the frontend of the site and admin notification.

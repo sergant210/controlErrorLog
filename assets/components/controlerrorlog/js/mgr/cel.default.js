@@ -154,11 +154,11 @@ Ext.onReady(function() {
 	}
 	function refreshLog(){
 		MODx.Ajax.request({
-			url: cel_config.connector_url
-			, params: {
+			url: cel_config.connector_url,
+			params: {
 				action: "mgr/errorlog/get"
-			}
-			, listeners: {
+			},
+			listeners: {
 				success: {
 					fn: function (r) {
 						cel_config.empty = r.object.empty;
