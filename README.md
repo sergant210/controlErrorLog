@@ -20,6 +20,9 @@ You can specify any number of lines in the system settings.
 * **control_frontend** - If true the email notification is activated. Must be specified the admin email.
 * **admin_email** - Admin email to notify about changes in the error log. If empty the notification would not work.
   
+## Cron task
+Use the script *core/components/controlerrorlog/cron/checkerrorlog.php* to check the error log for new errors.
+
 ####Important!
 The error indicator is displayed only for users with permission "error_log_view" and administrators with 'sudo'.
 

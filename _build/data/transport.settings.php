@@ -20,7 +20,7 @@ $tmp = array(
     ),
     'control_frontend' => array(
         'xtype' => 'combo-boolean',
-        'value' => true,
+        'value' => false,
         'area' => 'controlerrorlog.main',
     ),
     'admin_email' => array(

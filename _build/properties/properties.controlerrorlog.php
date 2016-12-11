@@ -2,7 +2,7 @@
 
 $properties = array();
 
-$tmp = array(
+$tmp = array(/*
 	'tpl' => array(
 		'type' => 'textfield',
 		'value' => 'tpl.controlErrorLog.item',
@@ -31,6 +31,7 @@ $tmp = array(
 		'type' => 'combo-boolean',
 		'value' => false,
 	),
+*/
 );
 
 foreach ($tmp as $k => $v) {

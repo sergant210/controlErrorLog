@@ -1,3 +1,8 @@
+1.1.2-pl
+==============
+- Code optimization.
+- Added cron script for checking the error log (core/components/controlerrorlog/cron/checkerrorlog.php).
+
 1.1.1-pl
 ==============
 - Updated the Dutch lexicon.

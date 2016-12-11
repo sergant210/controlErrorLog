@@ -13,21 +13,21 @@ switch ($modx->event->name) {
         }
         break;
     case 'OnHandleRequest':
-        if ($modx->context->get('key') == 'mgr') return;
         $email = $modx->getOption('controlerrorlog.admin_email');
-        if (empty($email)) return;
+        if ($modx->context->get('key') == 'mgr' || empty($email) || !$modx->getOption('controlerrorlog.control_frontend')) return;
+
         $f = $modx->getOption(xPDO::OPT_CACHE_PATH) . 'logs/error.log';
         if (file_exists($f)) {
             $casheHash = $modx->cacheManager->get('error_log');
             $hash = md5_file($f);
-            if (filesize($f) > 0 && !empty($casheHash)  &&  $casheHash != $hash && $modx->getOption('controlerrorlog.control_frontend')) {
+            if (filesize($f) > 0 && !empty($casheHash)  &&  $casheHash != $hash) {
                 $modx->lexicon->load('controlerrorlog:default');
                 /** @var modPHPMailer $mail */
                 $mail = $modx->getService('mail', 'mail.modPHPMailer');
                 $mail->setHTML(true);
 
                 $mail->set(modMail::MAIL_SUBJECT, $modx->lexicon('error_log_email_subject'));
-                $mail->set(modMail::MAIL_BODY, $modx->lexicon('error_log_email_body'));
+                $mail->set(modMail::MAIL_BODY, $modx->lexicon('error_log_email_body', array('siteName' => $modx->config['site_name'])));
                 $mail->set(modMail::MAIL_SENDER, $modx->getOption('emailsender'));
                 $mail->set(modMail::MAIL_FROM, $modx->getOption('emailsender'));
                 $mail->set(modMail::MAIL_FROM_NAME, $modx->getOption('site_name'));
