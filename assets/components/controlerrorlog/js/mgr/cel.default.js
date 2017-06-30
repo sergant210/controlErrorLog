@@ -13,33 +13,36 @@ function showLog() {
 				name: "log",
 				hideLabel: true,
 				id: "window-error-log-content",
+				style: 'margin-top: 10px;',
 				value: cel_config.log,
 				readOnly: true,
-				height: "97%",
+				height: "96%",
 				width: "99%",
-				hidden: cel_config.tooLarge ? true : false
+				hidden: !cel_config.tooLarge
 			}, {
 				html: _("error_log_too_large") ? _("error_log_too_large", {name: cel_config.name}) : 'The error log at <em>' + cel_config.name + '</em> is too large to be viewed. You can download it via the button below.',
 				id: "too-large-text",
+				style: "margin-top: 10px;",
 				border: false,
-				hidden: cel_config.tooLarge ? false : true
+				hidden: !cel_config.tooLarge
 			}, {
 				xtype: "button",
 				text: _("error_log_download") ? _("error_log_download", {size: cel_config.size}) :'Download Error Log ('+cel_config.size+'Mb)',
 				cls: "primary-button",
 				id: "error-log-download-btn",
 				style: "margin-top: 15px;",
-				hidden: cel_config.tooLarge ? false : true,
+				hidden: !cel_config.tooLarge,
 				handler: function () {
 					location.href = MODx.config.connectors_url + "?action=system/errorlog/download&HTTP_MODAUTH=" + MODx.siteId;
 				},
 				scope: this
 			}, {
-				html: _("error_log_last_lines") ? _("error_log_last_lines", {last: cel_config.last}) : 'The last '+cel_config.last+' lines.',
+				xtype: 'label',
+				text: _("error_log_last_lines") ? _("error_log_last_lines", {last: cel_config.last}) : 'The last '+cel_config.last+' lines.',
 				id: "error-log-last-lines",
-				style: "margin-top: 15px;",
+				style: "display:block;margin-top: 15px;",
 				border: false,
-				hidden: cel_config.tooLarge ? false : true
+				hidden: !(cel_config.tooLarge && cel_config.last > 0)
 			}, {
 				xtype: "textarea",
 				name: "log-last",
@@ -49,7 +52,7 @@ function showLog() {
 				readOnly: true,
 				height: "275px",
 				width: "99%",
-				hidden: cel_config.tooLarge ? false : true
+				hidden: !(cel_config.tooLarge && cel_config.last > 0)
 			}],
 			buttons: [{
 				text: _("cel_refresh") ? _("cel_refresh") : 'Refresh',
@@ -61,7 +64,7 @@ function showLog() {
 			}, {
 				text: _("cel_clear") ? _("cel_clear") : 'Clear',
 				id: "error-log-clear-btn",
-				disabled: cel_config.empty ? true : false,
+				disabled: cel_config.empty,
 				handler: function () {
 					MODx.Ajax.request({
 						url: MODx.config.connectors_url
@@ -127,8 +130,9 @@ function showLog() {
 									Ext.getCmp("window-error-log-content").hide();
 									Ext.getCmp("too-large-text").show();
 									Ext.getCmp("error-log-download-btn").setText(error_log_download).show();
-									Ext.getCmp("error-log-last-lines").html = error_log_last_lines;
-									Ext.getCmp("error-log-last-lines").show();
+									// Ext.getCmp("error-log-last-lines").show();
+									// Ext.getCmp("error-log-last-lines").html = error_log_last_lines;
+									Ext.getCmp("error-log-last-lines").setText(error_log_last_lines).show();
 									Ext.getCmp("error-log-last-lines-content").setValue(cel_config.log).show();
 								} else {
 									Ext.getCmp("window-error-log-content").show();
@@ -171,7 +175,7 @@ Ext.onReady(function() {
 	var usermenuUl = document.getElementById("modx-user-menu"),
 		firstLi = usermenuUl.firstChild,
 		errorlogLi = document.createElement("LI"),
-		title = _("errors_title") ? _("errors_title") : 'Open the error log in a new window';
+		title = _("errors_title") ? _("errors_title") : 'Open the error log in a modal window';
 
 	errorlogLi.innerHTML = "<a id=\"errorlog-link\" class=\""+getClass(cel_config.empty)+"\" href=\"javascript:showLog()\" title=\""+ title +"\"><i class=\"celicon\"></i></a>";
 	errorlogLi.className = "errorlog-li";

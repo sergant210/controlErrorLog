@@ -19,25 +19,26 @@ class celSystemErrorLogGetProcessor extends modProcessor
         $size = 0;
         $empty = true;
         $lastLines = (int) $this->modx->getOption('controlerrorlog.last_lines', null, 15);
-
         if (file_exists($f)) {
             $size = round(@filesize($f) / 1000 / 1000, 2);
-            $content = @file_get_contents($f);
             if ($size > 1) {
                 $tooLarge = true;
-                if ($includeContent) {
+                if ($lastLines > 0) {
+                    $content = @file_get_contents($f);
                     $lines = preg_split('/\\r\\n?|\\n/', $content);
                     $content = end($lines);
                     for ($i = 1; $i < $lastLines; $i++) {
-                        while (trim($content) == false) {
+                        /*while (trim($content) == false) {
                             $content = prev($lines);
-                        }
+                        }*/
                         $content = prev($lines) . "\n" . $content;
                     }
                     unset($lines);
                 }
+            } else {
+                $content = @file_get_contents($f);
             }
-            if (strlen(trim($content)) > 0 || $tooLarge) {
+            if (@filesize($f) > 1) {
                 $empty = false;
             }
         }
