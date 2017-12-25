@@ -3,6 +3,7 @@ $_lang['error_log'] = 'Foutlog';
 $_lang['cel_refresh'] = 'Verversen';
 $_lang['cel_clear'] = 'Legen';
 $_lang['cel_close'] = 'Sluiten';
+$_lang['cel_copy'] = 'Make a copy';
 $_lang['errors_title'] = 'Open foutlog in een nieuw venster';
 $_lang['error_log_last_lines'] = 'De laatste [[+last]] regels.';
 $_lang['error_log_download'] = 'Download foutlog ([[+size]]Mb)';

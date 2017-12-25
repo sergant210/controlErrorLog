@@ -12,7 +12,7 @@ switch ($modx->event->name) {
             $modx->controller->addHtml($_html);
         }
         break;
-    case 'OnHandleRequest':
+    case 'OnWebPageComplete':
         $email = $modx->getOption('controlerrorlog.admin_email');
         if ($modx->context->get('key') == 'mgr' || empty($email) || !$modx->getOption('controlerrorlog.control_frontend')) return;
 

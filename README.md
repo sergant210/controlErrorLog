@@ -4,12 +4,12 @@ This Extra adds new features
 * an ability to control the error log and view it in a popup window in the backend.
 * email notification about changes in the error log. Every time when user loads a page controlErrorLog checks the error log for changes. If they have been the email notification will be sent to the specified email.
 
-[![controlErrorLog](https://file.modx.pro/files/a/0/4/a0467354d7e042e6d91109cc894ce66cs.jpg)](https://file.modx.pro/files/a/0/4/a0467354d7e042e6d91109cc894ce66c.png)
+[![controlErrorLog](https://file.modx.pro/files/5/7/9/5794dfef698b9cf5a17ae209ff31d4d5s.jpg)](https://file.modx.pro/files/5/7/9/5794dfef698b9cf5a17ae209ff31d4d5.jpg)
 
 Now you will not miss any errors.
 
 If the log is too large you can see last 15 (by default) lines of it. 
-[![](https://file.modx.pro/files/1/2/b/12b463c3599b26eb852880dd6bb61a81s.jpg)](https://file.modx.pro/files/1/2/b/12b463c3599b26eb852880dd6bb61a81.png)
+[![](https://file.modx.pro/files/8/d/9/8d9d3142f073b544cb17200cf4f279dds.jpg)](https://file.modx.pro/files/8/d/9/8d9d3142f073b544cb17200cf4f279dd.jpg)
 
 You can specify any number of lines in the system settings. 
  
@@ -23,10 +23,10 @@ You can specify any number of lines in the system settings.
 ## Cron task
 Use the script *core/components/controlerrorlog/cron/checkerrorlog.php* to check the error log for new errors.
 
-####Important!
+#### Important!
 The error indicator is displayed only for users with permission "error_log_view" and administrators with 'sudo'.
 
-##Bugs and improvements
+## Bugs and improvements
 
 Feel free to suggest ideas/improvements/bugs on GitHub:
 http://github.com/sergant210/controlErrorLog/issues

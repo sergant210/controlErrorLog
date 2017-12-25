@@ -55,30 +55,30 @@ function showLog() {
 				hidden: !(cel_config.tooLarge && cel_config.last > 0)
 			}],
 			buttons: [{
-				text: _("cel_refresh") ? _("cel_refresh") : 'Refresh',
+				text: '<i class="icon icon-refresh"></i> ' + (_("cel_refresh") ? _("cel_refresh") : 'Refresh'),
 				id: "error-log-refresh-btn",
 				handler: function () {
 					celWindow._refresh();
 				},
 				scope: this
 			}, {
-				text: _("cel_clear") ? _("cel_clear") : 'Clear',
+				text: '<i class="icon icon-eraser"></i> ' + (_("cel_clear") ? _("cel_clear") : 'Clear'),
 				id: "error-log-clear-btn",
 				disabled: cel_config.empty,
 				handler: function () {
 					MODx.Ajax.request({
-						url: MODx.config.connectors_url
-						, params: {
+						url: MODx.config.connectors_url,
+						params: {
 							action: "system/errorlog/clear"
-						}
-						, listeners: {
+						},
+						listeners: {
 							"success": {
 								fn: function (r) {
 									var log = Ext.getCmp("window-error-log-content");
 									log.setValue("");
 									cel_config.log = "";
 									Ext.getCmp("error-log-clear-btn").disable();
-									Ext.getCmp("error-log-clear-btn").disable();
+									Ext.getCmp("error-log-copy-btn").disable();
 									if (cel_config.tooLarge) {
 										log.show();
 										Ext.getCmp("too-large-text").hide();
@@ -95,7 +95,14 @@ function showLog() {
 				},
 				scope: this
 			}, {
-				text: _("cel_close") ? _("cel_close") : 'Close',
+				text: '<i class="icon icon-copy"></i> ' + (_("cel_copy") ? _("cel_copy") : 'Make a copy'),
+				id: "error-log-copy-btn",
+				handler: function () {
+					celWindow._copy();
+				},
+				scope: this
+			}, {
+				text: '<i class="icon icon-times"></i> ' + (_("cel_close") ? _("cel_close") : 'Close'),
 				handler: function (w) {
 					celWindow.hide();
 				},
@@ -103,8 +110,8 @@ function showLog() {
 			}],
 			listeners: {
 				show: {fn: function(w) {
-					w._refresh();
-				}, scope: this}
+						w._refresh();
+					}, scope: this}
 			},
 			_refresh: function() {
 				MODx.Ajax.request({
@@ -120,9 +127,11 @@ function showLog() {
 								if (cel_config.empty) {
 									document.getElementById("errorlog-link").className = "errorlog-empty";
 									Ext.getCmp("error-log-clear-btn").disable();
+									Ext.getCmp("error-log-copy-btn").disable();
 								} else {
 									document.getElementById("errorlog-link").className = "errorlog-notempty";
 									Ext.getCmp("error-log-clear-btn").enable();
+									Ext.getCmp("error-log-copy-btn").enable();
 								}
 								if (cel_config.tooLarge) {
 									var error_log_download = _("error_log_download") ? _("error_log_download", {size: cel_config.size}) : 'Download Error Log ('+cel_config.size+'Mb)',
@@ -144,6 +153,24 @@ function showLog() {
 								delete(cel_config.log);
 							}
 						}
+					}
+				});
+			},
+			_copy: function() {
+				MODx.Ajax.request({
+					url: cel_config.connector_url,
+					params: {
+						action: "mgr/errorlog/copy"
+					},
+					listeners: {
+						"success": {
+							fn: function (r) {
+								if (r.message) {
+									MODx.msg.alert(_('success'), r.message, Ext.emptyFn);
+								}
+							}
+						},
+						"failure": {fn: function (r) {} }
 					}
 				});
 			}
