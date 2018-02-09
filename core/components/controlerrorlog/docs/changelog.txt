@@ -1,5 +1,9 @@
 Changelog for controlErrorLog.
 
+1.2.1-pl
+==============
+- Moved "Make a copy" button to the left (PR #16).
+
 1.2.0-pl
 ==============
 - Added a button "Make a copy" which makes a copy of the error log with current timestamp in the name.

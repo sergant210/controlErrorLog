@@ -7,7 +7,7 @@ function showLog() {
 			cloaseAction: 'hide',
 			title: _("error_log") ? _("error_log") : 'Error log',
 			stateful: false,
-			buttonAlign: "right",
+			buttonAlign: "left",
 			items: [{
 				xtype: "textarea",
 				name: "log",
@@ -16,7 +16,7 @@ function showLog() {
 				style: 'margin-top: 10px;',
 				value: cel_config.log,
 				readOnly: true,
-				height: "96%",
+				height: "94%",
 				width: "99%",
 				hidden: !cel_config.tooLarge
 			}, {
@@ -55,6 +55,13 @@ function showLog() {
 				hidden: !(cel_config.tooLarge && cel_config.last > 0)
 			}],
 			buttons: [{
+				text: '<i class="icon icon-copy"></i> ' + (_("cel_copy") ? _("cel_copy") : 'Make a copy'),
+				id: "error-log-copy-btn",
+				handler: function () {
+					celWindow._copy();
+				},
+				scope: this
+			}, '->' ,{
 				text: '<i class="icon icon-refresh"></i> ' + (_("cel_refresh") ? _("cel_refresh") : 'Refresh'),
 				id: "error-log-refresh-btn",
 				handler: function () {
@@ -92,13 +99,6 @@ function showLog() {
 							}
 						}
 					});
-				},
-				scope: this
-			}, {
-				text: '<i class="icon icon-copy"></i> ' + (_("cel_copy") ? _("cel_copy") : 'Make a copy'),
-				id: "error-log-copy-btn",
-				handler: function () {
-					celWindow._copy();
 				},
 				scope: this
 			}, {
