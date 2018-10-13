@@ -11,3 +11,5 @@ $_lang['setting_controlerrorlog.control_frontend'] = 'Notify about changes';
 $_lang['setting_controlerrorlog.control_frontend_desc'] = 'Control the error log and notify about changes.';
 $_lang['setting_controlerrorlog.admin_email'] = 'Admin email';
 $_lang['setting_controlerrorlog.admin_email_desc'] = 'Admin email to notify about changes in the error log.';
+$_lang['setting_controlerrorlog.allow_copy_deletion'] = 'Enable deletion of copies';
+$_lang['setting_controlerrorlog.allow_copy_deletion_desc'] = 'True - delete log copy. False - only clear the content.';

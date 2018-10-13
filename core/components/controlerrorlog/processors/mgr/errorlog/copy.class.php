@@ -1,9 +1,10 @@
 <?php
+include_once MODX_CORE_PATH . 'components/controlerrorlog/src/controlerrorlog.php';
 
 /**
  * Grab and output the error log
  */
-class celSystemErrorLogCopyProcessor extends modProcessor
+class controlErrorLogCopyProcessor extends controlErrorLogProcessor
 {
     public function checkPermissions()
     {
@@ -12,21 +13,21 @@ class celSystemErrorLogCopyProcessor extends modProcessor
 
     public function process()
     {
-        $file = $this->modx->getOption(xPDO::OPT_CACHE_PATH) . 'logs/error.log';
-        $newFile = $this->newName($file);
-//return $this->failure("не удалось скопировать $file...\n");
+        $file = $this->getLogPath('error.log');
+        $newFile = $this->getLogPath($this->newName()); ;
+
         if (!copy($file, $newFile)) {
-            return $this->failure("Error on copying log file.");
+            return $this->failure("Error when copying the log file.");
         }
 
-        return $this->success('File "' . basename($newFile) . '" is created!');
+        return $this->success('File "' . basename($newFile) . '" is created!', ['file' => basename($newFile)]);
     }
 
-    public function newName($log)
+    public function newName()
     {
         $timestamp = date('dmY_His');
-        return pathinfo($log, PATHINFO_DIRNAME) . '/' . "error_{$timestamp}.log";
+        return "error_{$timestamp}.log";
     }
 }
 
-return 'celSystemErrorLogCopyProcessor';
+return 'controlErrorLogCopyProcessor';

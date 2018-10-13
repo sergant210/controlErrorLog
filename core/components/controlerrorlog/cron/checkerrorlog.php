@@ -16,8 +16,8 @@ if ($email = $modx->getOption('controlerrorlog.admin_email')) {
             $mail = $modx->getService('mail', 'mail.modPHPMailer');
             $mail->setHTML(true);
 
-            $mail->set(modMail::MAIL_SUBJECT, $modx->lexicon('error_log_email_subject'));
-            $mail->set(modMail::MAIL_BODY, $modx->lexicon('error_log_email_body', array('siteName' => $modx->config['site_name'])));
+            $mail->set(modMail::MAIL_SUBJECT, $modx->lexicon('errorlog_email_subject'));
+            $mail->set(modMail::MAIL_BODY, $modx->lexicon('errorlog_email_body', array('siteName' => $modx->config['site_name'])));
             $mail->set(modMail::MAIL_SENDER, $modx->getOption('emailsender'));
             $mail->set(modMail::MAIL_FROM, $modx->getOption('emailsender'));
             $mail->set(modMail::MAIL_FROM_NAME, $modx->getOption('site_name'));

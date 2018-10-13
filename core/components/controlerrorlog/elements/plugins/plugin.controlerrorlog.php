@@ -8,26 +8,25 @@ switch ($modx->event->name) {
 
             $response = $modx->runProcessor('mgr/errorlog/get', array('includeContent'=>false), array('processors_path' => $modx->getOption('core_path') . 'components/controlerrorlog/processors/'));
             $resObj = $response->getObject();
-            $_html = "<script>	var cel_config = " . $modx->toJSON($resObj) . "; </script>";
+            $_html = "<script>	controlErrorLog.config = " . $modx->toJSON($resObj) . ";</script>";
             $modx->controller->addHtml($_html);
         }
         break;
-    case 'OnWebPageComplete':
-        $email = $modx->getOption('controlerrorlog.admin_email');
-        if ($modx->context->get('key') == 'mgr' || empty($email) || !$modx->getOption('controlerrorlog.control_frontend')) return;
-
+    case 'OnHandleRequest':
+        if ($modx->context->get('key') == 'mgr') return '';
         $f = $modx->getOption(xPDO::OPT_CACHE_PATH) . 'logs/error.log';
         if (file_exists($f)) {
             $casheHash = $modx->cacheManager->get('error_log');
             $hash = md5_file($f);
-            if (filesize($f) > 0 && !empty($casheHash)  &&  $casheHash != $hash) {
+            $email = $modx->getOption('controlerrorlog.admin_email');
+            if (filesize($f) > 0 && !empty($casheHash)  &&  $casheHash != $hash && $modx->getOption('controlerrorlog.control_frontend') && !empty($email)) {
                 $modx->lexicon->load('controlerrorlog:default');
                 /** @var modPHPMailer $mail */
                 $mail = $modx->getService('mail', 'mail.modPHPMailer');
                 $mail->setHTML(true);
 
-                $mail->set(modMail::MAIL_SUBJECT, $modx->lexicon('error_log_email_subject'));
-                $mail->set(modMail::MAIL_BODY, $modx->lexicon('error_log_email_body', array('siteName' => $modx->config['site_name'])));
+                $mail->set(modMail::MAIL_SUBJECT, $modx->lexicon('errorlog_email_subject'));
+                $mail->set(modMail::MAIL_BODY, $modx->lexicon('errorlog_email_body'));
                 $mail->set(modMail::MAIL_SENDER, $modx->getOption('emailsender'));
                 $mail->set(modMail::MAIL_FROM, $modx->getOption('emailsender'));
                 $mail->set(modMail::MAIL_FROM_NAME, $modx->getOption('site_name'));

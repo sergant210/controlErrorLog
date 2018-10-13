@@ -22,13 +22,8 @@
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
-.errorlog-empty i:before {
-	content: "\f058";
-}
-.errorlog-notempty i:before {
-	content: "\f071";
-	color: yellow;
-}
+.errorlog-empty i:before {content: "\f058";}
+.errorlog-notempty i:before {content: "\f071";color: yellow;}
 .errorlog-li a {padding: 0 !important;}
 .errorlog-li a span {color: red; background-color: white;padding: 5px;}
 #errorlog-box {background-color: #FFF;border: 2px solid #DDD;box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);position: absolute;width: 1200px;z-index: 5000;}
@@ -37,3 +32,9 @@
 #errorlog-box-title button {position: absolute;top: 5px;padding: 3px 6px !important;}
 #clearlog-btn {right: 35px;}
 #close-btn {right: 8px;}
+#errorlog-last-lines-content {height: calc(100% - 70px) !important;}
+#errorlog-window .btn-danger:hover {
+	background-color:#c9302c;
+	box-shadow: 0 0 0 1px #ac2925;
+	color: #fff;
+}

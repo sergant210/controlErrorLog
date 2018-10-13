@@ -11,3 +11,5 @@ $_lang['setting_controlerrorlog.control_frontend'] = 'Уведомлять об 
 $_lang['setting_controlerrorlog.control_frontend_desc'] = 'Контролировать журнал ошибок и уведомлять об изменениях.';
 $_lang['setting_controlerrorlog.admin_email'] = 'Email для уведомления';
 $_lang['setting_controlerrorlog.admin_email_desc'] = 'Укажите элекстронную почту администратора для уведомления об ошибках.';
+$_lang['setting_controlerrorlog.allow_copy_deletion'] = 'Удалять копии';
+$_lang['setting_controlerrorlog.allow_copy_deletion_desc'] = 'Режим работы с копиями журнала - удалять или очищать.';

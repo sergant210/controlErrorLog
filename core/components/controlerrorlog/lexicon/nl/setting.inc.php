@@ -11,3 +11,5 @@ $_lang['setting_controlerrorlog.control_frontend'] = 'Informeren over wijziginge
 $_lang['setting_controlerrorlog.control_frontend_desc'] = 'Informeren over wijzigingen.';
 $_lang['setting_controlerrorlog.admin_email'] = 'E-mailadres administrator';
 $_lang['setting_controlerrorlog.admin_email_desc'] = 'Indien er iets in het foutlog wordt geschreven, zal er naar dit e-mailadres een notificatie worden verzonden.';
+$_lang['setting_controlerrorlog.allow_copy_deletion'] = 'Enable deletion of copies';
+$_lang['setting_controlerrorlog.allow_copy_deletion_desc'] = 'True - delete log copy. False - only clear the content.';

@@ -1,5 +1,9 @@
 Changelog for controlErrorLog.
 
+1.3.0-pl
+==============
+- Added the ability to control copies of the error log.
+
 1.2.1-pl
 ==============
 - Moved "Make a copy" button to the left (PR #16).

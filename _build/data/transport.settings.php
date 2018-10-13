@@ -28,6 +28,11 @@ $tmp = array(
         'value' => '',
         'area' => 'controlerrorlog.main',
     ),
+    'allow_copy_deletion' => array(
+        'xtype' => 'combo-boolean',
+        'value' => true,
+        'area' => 'controlerrorlog.main',
+    ),
 );
 
 foreach ($tmp as $k => $v) {
