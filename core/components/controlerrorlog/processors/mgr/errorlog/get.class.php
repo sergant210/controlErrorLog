@@ -1,5 +1,5 @@
 <?php
-include_once MODX_CORE_PATH . 'components/controlerrorlog/src/controlerrorlog.php';
+include_once dirname(dirname(__FILE__)) . '/controlerrorlog.php';
 
 /**
  * Grab and output the error log
@@ -18,13 +18,13 @@ class controlErrorLogGetProcessor extends controlErrorLogProcessor
 
     public function process()
     {
-        $includeContent = $this->getProperty('includeContent',true);
+        $includeContent = $this->getProperty('includeContent', true);
         $this->file = $this->getLogPath($this->getProperty('file', 'error.log'));
         $content = '';
         $size = '0Kb';
         $empty = true;
         $tooLarge = false;
-        $lastLines = (int) $this->modx->getOption('controlerrorlog.last_lines', null, 15);
+        $lastLines = (int)$this->modx->getOption('controlerrorlog.last_lines', null, 15);
 
         if (file_exists($this->file)) {
             $size = $this->getSize(true);
@@ -41,18 +41,18 @@ class controlErrorLogGetProcessor extends controlErrorLogProcessor
             }
         }
         $connector_url = $this->modx->getOption('assets_url') . 'components/controlerrorlog/connector.php';
-        $response = array(
+        $response = [
             'name' => basename($this->file),
             'tooLarge' => $tooLarge,
             'size' => $size,
             'empty' => $empty,
             'last' => $lastLines,
-            'auto_refresh' => (bool) $this->modx->getOption('controlerrorlog.auto_refresh',null,true),
+            'auto_refresh' => (bool)$this->modx->getOption('controlerrorlog.auto_refresh', null, true),
             'refresh_freq' => $this->modx->getOption('controlerrorlog.refresh_freq', null, 60) * 1000,
             'connector_url' => $connector_url,
             'log' => $includeContent ? $content : '',
-            'allow_copy_deletion' => (bool) $this->modx->getOption('controlerrorlog.allow_copy_deletion', null, true),
-        );
+            'allow_copy_deletion' => (bool)$this->modx->getOption('controlerrorlog.allow_copy_deletion', null, true),
+        ];
 
         return $this->success('', $response);
     }
@@ -60,7 +60,7 @@ class controlErrorLogGetProcessor extends controlErrorLogProcessor
     protected function getLastLines($lastLines)
     {
         $data = [];
-        if($this->file) {
+        if ($this->file) {
             $file = fopen($this->file, 'r');
             $pos = $this->size - 2048;
             fseek($file, $pos);

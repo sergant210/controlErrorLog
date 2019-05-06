@@ -3,23 +3,25 @@ switch ($modx->event->name) {
     case 'OnManagerPageBeforeRender':
         if ($modx->hasPermission('error_log_view')) {
             $modx->controller->addLexiconTopic('controlerrorlog:default');
-            $modx->controller->addCss($modx->getOption('assets_url').'components/controlerrorlog/css/mgr/main.css');
-            $modx->controller->addJavascript($modx->getOption('assets_url').'components/controlerrorlog/js/mgr/cel.default.js');
+            $modx->controller->addCss($modx->getOption('assets_url') . 'components/controlerrorlog/css/mgr/main.css');
+            $modx->controller->addJavascript($modx->getOption('assets_url') . 'components/controlerrorlog/js/mgr/cel.default.js');
 
-            $response = $modx->runProcessor('mgr/errorlog/get', array('includeContent'=>false), array('processors_path' => $modx->getOption('core_path') . 'components/controlerrorlog/processors/'));
+            $response = $modx->runProcessor('mgr/errorlog/get', ['includeContent' => false], ['processors_path' => $modx->getOption('core_path') . 'components/controlerrorlog/processors/']);
             $resObj = $response->getObject();
             $_html = "<script>	controlErrorLog.config = " . $modx->toJSON($resObj) . ";</script>";
             $modx->controller->addHtml($_html);
         }
         break;
     case 'OnHandleRequest':
-        if ($modx->context->get('key') == 'mgr') return '';
+        if ($modx->context->get('key') == 'mgr') {
+            return '';
+        }
         $f = $modx->getOption(xPDO::OPT_CACHE_PATH) . 'logs/error.log';
         if (file_exists($f)) {
             $casheHash = $modx->cacheManager->get('error_log');
             $hash = md5_file($f);
             $email = $modx->getOption('controlerrorlog.admin_email');
-            if (filesize($f) > 0 && !empty($casheHash)  &&  $casheHash != $hash && $modx->getOption('controlerrorlog.control_frontend') && !empty($email)) {
+            if (filesize($f) > 0 && !empty($casheHash) && $casheHash != $hash && $modx->getOption('controlerrorlog.control_frontend') && !empty($email)) {
                 $modx->lexicon->load('controlerrorlog:default');
                 /** @var modPHPMailer $mail */
                 $mail = $modx->getService('mail', 'mail.modPHPMailer');
@@ -35,7 +37,7 @@ switch ($modx->event->name) {
                 $mail->address('reply-to', $modx->getOption('emailsender'));
 
                 if (!$mail->send()) {
-                    print ('An error occurred while trying to send the email: '.$modx->mail->mailer->ErrorInfo);
+                    print ('An error occurred while trying to send the email: ' . $modx->mail->mailer->ErrorInfo);
                 }
                 $mail->reset();
             }

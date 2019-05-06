@@ -1,17 +1,18 @@
 /* Main object */
-var controlErrorLog = function (config) {
+const ControlErrorLog = function (config) {
 	config = config || {};
-	controlErrorLog.superclass.constructor.call(this, config);
+	ControlErrorLog.superclass.constructor.call(this, config);
 };
-Ext.extend(controlErrorLog, Ext.Component, {
+
+Ext.extend(ControlErrorLog, Ext.Component, {
 	window: {}, combo: {}, config: {},
 	fileIndex: 0,
 	isEmpty: function(object) {
-		for (var key in object)
+		for (let key in object)
 			if (object.hasOwnProperty(key)) return false;
 		return true;
 	},
-	showLog: function showLog() {
+	showLog: function() {
 		if (controlErrorLog.isEmpty(controlErrorLog.window)) {
 			controlErrorLog.window = new MODx.Window({
 				id: "errorlog-window",
@@ -138,7 +139,7 @@ Ext.extend(controlErrorLog, Ext.Component, {
 									fn: function (r) {
 										controlErrorLog.window._reset(r.object);
 										if (r.object.isDeleted) {
-											var combo = Ext.getCmp('controlerrorlog-logfiles');
+											const combo = Ext.getCmp('controlerrorlog-logfiles');
 											combo.setValue('error.log');
 											combo.store.removeAt(controlErrorLog.fileIndex);
 											Ext.getCmp('errorlog-clear-btn').setDefaultText();
@@ -169,7 +170,7 @@ Ext.extend(controlErrorLog, Ext.Component, {
 						}, scope: this}
 				},
 				_reset: function(r) {
-					var log = Ext.getCmp("window-errorlog-content");
+					const log = Ext.getCmp("window-errorlog-content");
 					log.setValue(r.log);
 					// controlErrorLog.config.log = r.log;
 					Ext.getCmp("errorlog-clear-btn").disable();
@@ -213,7 +214,7 @@ Ext.extend(controlErrorLog, Ext.Component, {
 									}
 									Ext.getCmp('errorlog-filesize-label').setText(r.object.size);
 									if (controlErrorLog.config.tooLarge) {
-										var	errorlog_last_lines = _("errorlog_last_lines") ? _("errorlog_last_lines", {last: controlErrorLog.config.last}) : 'The last '+controlErrorLog.config.last+' lines.';
+										const errorlog_last_lines = _("errorlog_last_lines") ? _("errorlog_last_lines", {last: controlErrorLog.config.last}) : 'The last '+controlErrorLog.config.last+' lines.';
 										Ext.getCmp("window-errorlog-content").hide();
 										Ext.getCmp("too-large-text").show();
 										Ext.getCmp("errorlog-last-lines").setText(errorlog_last_lines).show();
@@ -239,7 +240,7 @@ Ext.extend(controlErrorLog, Ext.Component, {
 						listeners: {
 							"success": {
 								fn: function (r) {
-									var file = r.object.file,
+									let file = r.object.file,
 										Record = Ext.data.Record.create([{name: "id"}, {name: "name"}]);
 
 									Ext.getCmp('controlerrorlog-logfiles').store.add(new Record({id: file, name: file}));
@@ -254,7 +255,7 @@ Ext.extend(controlErrorLog, Ext.Component, {
 				}
 			});
 		}
-		controlErrorLog.window.show(Ext.EventObject.target);
+		controlErrorLog.window.hidden ? controlErrorLog.window.show(Ext.EventObject.target) : controlErrorLog.window.hide();
 	},
 	getClass: function(empty) {
 		return empty ? "errorlog-empty" : "errorlog-notempty";
@@ -277,7 +278,7 @@ Ext.extend(controlErrorLog, Ext.Component, {
 	}
 });
 // Ext.reg('control-errorlog', controlErrorLog);
-controlErrorLog = new controlErrorLog();
+controlErrorLog = new ControlErrorLog();
 
 /* Combo */
 controlErrorLog.combo.Logfiles = function(config) {
@@ -300,9 +301,8 @@ controlErrorLog.combo.Logfiles = function(config) {
 Ext.extend(controlErrorLog.combo.Logfiles, MODx.combo.ComboBox);
 Ext.reg('controlerrorlog-combo-logfiles', controlErrorLog.combo.Logfiles);
 
-
 Ext.onReady(function() {
-	var usermenuUl = document.getElementById("modx-user-menu"),
+	let usermenuUl = document.getElementById("modx-user-menu"),
 		errorlogLi = document.createElement("LI"),
 		title = _("errors_title") ? _("errors_title") : 'Open the error log in a modal window';
 

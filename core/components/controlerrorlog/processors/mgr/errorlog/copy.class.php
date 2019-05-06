@@ -1,5 +1,5 @@
 <?php
-include_once MODX_CORE_PATH . 'components/controlerrorlog/src/controlerrorlog.php';
+include_once dirname(dirname(__FILE__)) . '/controlerrorlog.php';
 
 /**
  * Grab and output the error log
@@ -14,7 +14,7 @@ class controlErrorLogCopyProcessor extends controlErrorLogProcessor
     public function process()
     {
         $file = $this->getLogPath('error.log');
-        $newFile = $this->getLogPath($this->newName()); ;
+        $newFile = $this->getLogPath($this->newName());
 
         if (!copy($file, $newFile)) {
             return $this->failure("Error when copying the log file.");

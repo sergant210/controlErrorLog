@@ -1,5 +1,5 @@
 <?php
-include_once MODX_CORE_PATH . 'components/controlerrorlog/src/controlerrorlog.php';
+include_once dirname(dirname(__FILE__)) . '/controlerrorlog.php';
 
 /**
  * Grab and output the error log
@@ -17,10 +17,10 @@ class celSystemErrorLogGetFilesProcessor extends controlErrorLogProcessor
             $this->modx->getCacheManager();
             $this->modx->cacheManager->writeFile($this->getLogPath('error.log'), '');
         }
-        $files = [['id'=>'error.log','name'=>'error.log']];
+        $files = [['id' => 'error.log', 'name' => 'error.log']];
         foreach (new DirectoryIterator($this->getLogPath()) as $fileInfo) {
-            if($fileInfo->isFile() && $fileInfo->getExtension() == 'log' && $fileInfo->getFilename() !== 'error.log') {
-                $files[] = ['id'=>$fileInfo->getFilename(),'name'=>$fileInfo->getFilename()];
+            if ($fileInfo->isFile() && $fileInfo->getExtension() == 'log' && $fileInfo->getFilename() !== 'error.log') {
+                $files[] = ['id' => $fileInfo->getFilename(), 'name' => $fileInfo->getFilename()];
             }
         }
         return $this->outputArray($files);

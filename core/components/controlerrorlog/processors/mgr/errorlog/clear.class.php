@@ -1,5 +1,5 @@
 <?php
-include_once MODX_CORE_PATH . 'components/controlerrorlog/src/controlerrorlog.php';
+include_once dirname(dirname(__FILE__)) . '/controlerrorlog.php';
 
 /**
  * Clear the error log
@@ -7,7 +7,8 @@ include_once MODX_CORE_PATH . 'components/controlerrorlog/src/controlerrorlog.ph
  * @package modx
  * @subpackage processors.system.errorlog
  */
-class controlErrorLogClearProcessor extends controlErrorLogProcessor {
+class controlErrorLogClearProcessor extends controlErrorLogProcessor
+{
 
     public function checkPermissions($permission = 'error_log_erase')
     {
@@ -34,14 +35,15 @@ class controlErrorLogClearProcessor extends controlErrorLogProcessor {
             }
         }
 
-        $response = array(
+        $response = [
             'name' => basename($file),
             'log' => $content,
             'tooLarge' => false,
             'isDeleted' => $isDeleted,
             'size' => '0Kb',
-        );
+        ];
         return $this->success('', $response);
     }
 }
+
 return 'controlErrorLogClearProcessor';

@@ -3,7 +3,7 @@
 define('PKG_NAME', 'controlErrorLog');
 define('PKG_NAME_LOWER', strtolower(PKG_NAME));
 
-define('PKG_VERSION', '1.3.0');
+define('PKG_VERSION', '1.3.1');
 define('PKG_RELEASE', 'pl');
 define('PKG_AUTO_INSTALL', false);
 define('PKG_NAMESPACE_PATH', '{core_path}components/' . PKG_NAME_LOWER . '/');
@@ -31,20 +31,20 @@ define('MODX_CONNECTORS_URL', MODX_BASE_URL . 'connectors/');
 define('MODX_ASSETS_URL', MODX_BASE_URL . 'assets/');
 
 /* define build options */
-define('BUILD_MENU_UPDATE', false);
-define('BUILD_ACTION_UPDATE', false);
 define('BUILD_SETTING_UPDATE', false);
-define('BUILD_CHUNK_UPDATE', false);
-
-define('BUILD_SNIPPET_UPDATE', false);
 define('BUILD_PLUGIN_UPDATE', true);
+
+//define('BUILD_MENU_UPDATE', false);
+//define('BUILD_ACTION_UPDATE', false);
+//define('BUILD_CHUNK_UPDATE', false);
+//define('BUILD_SNIPPET_UPDATE', false);
 //define('BUILD_EVENT_UPDATE', true);
 //define('BUILD_POLICY_UPDATE', true);
 //define('BUILD_POLICY_TEMPLATE_UPDATE', true);
 //define('BUILD_PERMISSION_UPDATE', true);
 
-define('BUILD_CHUNK_STATIC', false);
-define('BUILD_SNIPPET_STATIC', false);
+//define('BUILD_CHUNK_STATIC', false);
+//define('BUILD_SNIPPET_STATIC', false);
 define('BUILD_PLUGIN_STATIC', false);
 
 $BUILD_RESOLVERS = array(

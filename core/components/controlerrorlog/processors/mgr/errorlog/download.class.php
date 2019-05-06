@@ -1,5 +1,5 @@
 <?php
-include_once MODX_CORE_PATH . 'components/controlerrorlog/src/controlerrorlog.php';
+include_once dirname(dirname(__FILE__)) . '/controlerrorlog.php';
 
 /**
  * Grab and download the error log
@@ -7,7 +7,8 @@ include_once MODX_CORE_PATH . 'components/controlerrorlog/src/controlerrorlog.ph
  * @package modx
  * @subpackage processors.system.errorlog
  */
-class controlErrorLogDownloadProcessor extends controlErrorLogProcessor {
+class controlErrorLogDownloadProcessor extends controlErrorLogProcessor
+{
 
     public function checkPermissions()
     {
@@ -22,10 +23,11 @@ class controlErrorLogDownloadProcessor extends controlErrorLogProcessor {
         }
         header('Content-Type: application/force-download');
         header('Content-Length: ' . filesize($file));
-        header('Content-Disposition: attachment; filename="'.basename($file).'"');
+        header('Content-Disposition: attachment; filename="' . basename($file) . '"');
         ob_get_level() && @ob_end_flush();
         readfile($file);
         die();
     }
 }
+
 return 'controlErrorLogDownloadProcessor';
