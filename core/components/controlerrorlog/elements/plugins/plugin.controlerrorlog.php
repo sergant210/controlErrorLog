@@ -13,7 +13,7 @@ switch ($modx->event->name) {
         }
         break;
     case 'OnHandleRequest':
-        if ($modx->context->get('key') == 'mgr') {
+        if ($modx->context->get('key') === 'mgr') {
             return '';
         }
         $f = $modx->getOption(xPDO::OPT_CACHE_PATH) . 'logs/error.log';
@@ -21,7 +21,7 @@ switch ($modx->event->name) {
             $casheHash = $modx->cacheManager->get('error_log');
             $hash = md5_file($f);
             $email = $modx->getOption('controlerrorlog.admin_email');
-            if (filesize($f) > 0 && !empty($casheHash) && $casheHash != $hash && $modx->getOption('controlerrorlog.control_frontend') && !empty($email)) {
+            if (!empty($email) && !empty($casheHash) && $casheHash !== $hash && $modx->getOption('controlerrorlog.control_frontend') && filesize($f) > 0) {
                 $modx->lexicon->load('controlerrorlog:default');
                 /** @var modPHPMailer $mail */
                 $mail = $modx->getService('mail', 'mail.modPHPMailer');
@@ -41,7 +41,7 @@ switch ($modx->event->name) {
                 }
                 $mail->reset();
             }
-            if ($casheHash != $hash) {
+            if ($casheHash !== $hash) {
                 $modx->cacheManager->set('error_log', $hash, 0);
             }
         }

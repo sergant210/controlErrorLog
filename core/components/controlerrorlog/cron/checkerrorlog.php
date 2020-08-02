@@ -1,8 +1,10 @@
 <?php
 define('MODX_API_MODE', true);
-require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/config.core.php';
-require_once MODX_CORE_PATH . 'config/' . MODX_CONFIG_KEY . '.inc.php';
-require_once MODX_BASE_PATH . 'index.php';
+require_once dirname(__FILE__, 5) . '/config.core.php';
+require_once MODX_CORE_PATH . 'model/modx/modx.class.php';
+$modx = new modX();
+$modx->initialize('web');
+$modx->getService('error','error.modError', '', '');
 
 if ($email = $modx->getOption('controlerrorlog.admin_email')) {
 
@@ -10,7 +12,7 @@ if ($email = $modx->getOption('controlerrorlog.admin_email')) {
     if (file_exists($f)) {
         $casheHash = $modx->cacheManager->get('error_log');
         $hash = md5_file($f);
-        if (filesize($f) > 0 && !empty($casheHash) && $casheHash != $hash) {
+        if (!empty($casheHash) && $casheHash !== $hash && filesize($f) > 0) {
             $modx->lexicon->load('controlerrorlog:default');
             /** @var modPHPMailer $mail */
             $mail = $modx->getService('mail', 'mail.modPHPMailer');
@@ -30,7 +32,7 @@ if ($email = $modx->getOption('controlerrorlog.admin_email')) {
             }
             $mail->reset();
         }
-        if ($casheHash != $hash) {
+        if ($casheHash !== $hash) {
             $modx->cacheManager->set('error_log', $hash, 0);
         }
     }
