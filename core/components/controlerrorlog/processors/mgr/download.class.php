@@ -1,5 +1,5 @@
 <?php
-include_once dirname(dirname(__FILE__)) . '/controlerrorlog.php';
+include_once dirname(__DIR__) . '/controlerrorlog.php';
 
 /**
  * Grab and download the error log
@@ -12,7 +12,7 @@ class controlErrorLogDownloadProcessor extends controlErrorLogProcessor
 
     public function checkPermissions()
     {
-        return $this->modx->hasPermission('error_log_view') && $this->modx->context->key == 'mgr';
+        return $this->modx->hasPermission('error_log_view') && $this->modx->context->key === 'mgr';
     }
 
     public function process()

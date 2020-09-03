@@ -33,6 +33,31 @@ $tmp = array(
         'value' => true,
         'area' => 'controlerrorlog.main',
     ),
+    'tpl' => array(
+        'xtype' => 'textfield',
+        'value' => 'error_table.tpl',
+        'area' => 'controlerrorlog.main',
+    ),
+    'format_output' => array(
+        'xtype' => 'combo-boolean',
+        'value' => true,
+        'area' => 'controlerrorlog.main',
+    ),
+    'date_format' => array(
+        'xtype' => 'textfield',
+        'value' => '%Y-%m-%d',
+        'area' => 'controlerrorlog.main',
+    ),
+    'css_file' => array(
+        'xtype' => 'textfield',
+        'value' => '/assets/components/controlerrorlog/css/web/default.css',
+        'area' => 'controlerrorlog.main',
+    ),
+    'js_file' => array(
+        'xtype' => 'textfield',
+        'value' => '/assets/components/controlerrorlog/js/web/default.js',
+        'area' => 'controlerrorlog.main',
+    ),
 );
 
 foreach ($tmp as $k => $v) {

@@ -1,0 +1,129 @@
+@import url("../mgr/main.css");
+
+#side-panel-wrapper {
+	position: fixed;
+	z-index: 999999;
+	top: 0;
+	left: -920px;
+	transition: left 0.5s;
+	width: 920px;
+	height: 100vh;
+	box-shadow: 1px 0 5px rgba(0,0,0,0.4);
+	min-width: 0;
+	word-wrap: break-word;
+	background-color: #fff;
+	background-clip: border-box;
+	border: 1px solid rgba(0,0,0,.125);
+	box-sizing: border-box;
+}
+#side-panel-wrapper.expanded {
+	left: 0;
+}
+#side-panel-wrapper i.toggle {
+	font-size: 1em;
+}
+.side-panel-title {
+	font-size: 20px;
+}
+.side-panel-header {
+	border-bottom: 1px solid rgba(0,0,0,.125);
+	background-color: rgba(0,0,0,.03);
+	margin-bottom: 0;
+	padding: 10px 15px;
+	position: relative;
+}
+.side-panel-body {
+	min-height: 1px;
+	font-size: 12px;
+	line-height: 1.5em;
+	overflow: auto;
+	height: calc(100vh - 90px);
+}
+.side-panel-body h3 {
+	font-size: 16px;
+	color: #b13f3f;
+	padding-left: 15px;
+}
+.side-panel-body h4 {
+	font-size: 14px;
+	color: #454545;
+	padding-left: 15px;
+}
+.side-panel-body pre.too-large {
+	background-color: #f0feff;
+	border: 1px solid #e1e1e1;
+}
+.side-panel-body pre {
+	font: inherit;
+	white-space: pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -o-pre-wrap;
+	word-wrap: break-word;
+	padding: 10px;
+}
+.side-panel-footer {
+	font-size: 14px;
+	padding: 10px 15px;
+	line-height: 1.5em;
+	margin-top: 0;
+	background-color: rgba(0,0,0,.03);
+	border-top: 1px solid rgba(0,0,0,.125);
+}
+.side-panel-footer span:first-child {
+	border-right: 1px solid #c6c6c6;
+	display: inline-block;
+	margin-right: 10px;
+	padding-right: 10px;
+}
+#side-panel-close-button {
+	font-size: 30px;
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	right: 10px;
+	cursor: pointer;
+	color: #afafaf;
+}
+#side-panel-close-button:hover {
+	color: #6b6b6b;
+}
+.side-buttons {
+	background-color: #337AB7;
+	border-radius: 0 10px 10px 0;
+	box-shadow: 1px 0 3px rgba(0,0,0,0.4);
+	color: transparent;
+	display: block;
+	font-size: 14px;
+	left: 0;
+	padding: 8px;
+	position: fixed;
+	text-align: left;
+	top: 40%;
+	transition: left 0.5s;
+}
+#side-panel-wrapper.expanded .side-buttons {
+	left: 919px;
+}
+.side-buttons a {
+	text-decoration: none;
+}
+.side-buttons li {
+	padding-bottom: 10px;
+}
+.side-buttons li:last-child {
+	padding-bottom: 0;
+}
+.side-buttons .celicon:before {
+	color: #FFF;
+}
+.side-buttons .celicon-trash i:before {
+	color: #ff9292 !important;
+}
+.side-buttons .celicon-trash.disabled i:before{
+	color: #cccccc !important;
+	cursor: default;
+}
+table.error-log-table {
+	font-size: 12px;
+	line-height: 1.5em;
+}

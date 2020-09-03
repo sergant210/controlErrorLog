@@ -14,14 +14,23 @@ If the log is too large you can see only the specified number of the last lines 
 [![](https://file.modx.pro/files/8/d/9/8d9d3142f073b544cb17200cf4f279dds.jpg)](https://file.modx.pro/files/8/d/9/8d9d3142f073b544cb17200cf4f279dd.jpg)
 
 You can specify any number of lines in the system settings. 
- 
+
+## Error log on the frontend
+[![](https://modzone.ru/assets/images/controlerrorlog_front.png)](https://modzone.ru/assets/images/controlerrorlog_front.png)
+It's very useful in development mode. It's available only for users with the "error_log_view" permission. 
+
 ## System settings
-* **last_lines** - Displays the specified number of last lines when the error log is too large to display.   
-* **auto_refresh** - Check the state of the error log with the specified frequency.   
-* **refresh_freq** - Error log refresh frequency in seconds. By default, set to 60 seconds.
-* **control_frontend** - If true the email notification is activated. Must be specified the admin email.
 * **admin_email** - Admin email to notify about changes in the error log. If empty the notification would not work.
 * **allow_copy_deletion** - Allow to delete copies of the error log instead of clearing them.
+* **auto_refresh** - Check the state of the error log with the specified frequency.
+* **control_frontend** - If true the error log will be shown on the frontend. 
+* **date_format** - Date format in the strftime function style.
+* **format_output** - Displays error log in formatted form.
+* **last_lines** - Displays the specified number of last lines when the error log is too large to display.   
+* **refresh_freq** - Error log refresh frequency in seconds. By default, set to 60 seconds.
+* **tpl** - Smarty template for displaying messages from the error log.
+* **css_file** - URL of a css file for the frontend.
+* **js_file** - URL of a javascript file for the frontend.
   
 ## Cron task
 Use the script *core/components/controlerrorlog/cron/checkerrorlog.php* to check the error log for new errors.
@@ -34,6 +43,7 @@ Use the script *core/components/controlerrorlog/cron/checkerrorlog.php* to check
 
 #### Important!
 The error indicator is displayed only for users with permission "error_log_view" and administrators with "sudo".
+
 
 ## Bugs and improvements
 

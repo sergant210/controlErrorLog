@@ -12,6 +12,41 @@ Ext.extend(ControlErrorLog, Ext.Component, {
 			if (object.hasOwnProperty(key)) return false;
 		return true;
 	},
+	toggle: function(elem) {
+		let messageElem = elem.closest('tr').nextElementSibling;
+		if (messageElem) {
+			messageElem.classList.toggle('collapsed');
+			elem.classList.toggle('celicon-plus-square');
+			elem.classList.toggle('celicon-minus-square');
+		}
+
+	},
+	toggleAll: function(elem) {
+		let messages = document.querySelectorAll('table.error-log-table tr.error-description');
+		messages.forEach(function (item, i) {
+			if (controlErrorLog.collapsed) {
+				item.classList.remove('collapsed');
+				elem.classList.remove('celicon-plus-square');
+				elem.classList.add('celicon-minus-square');
+			} else {
+				item.classList.add('collapsed');
+				elem.classList.remove('celicon-minus-square');
+				elem.classList.add('celicon-plus-square');
+			}
+		});
+		let toggles = document.querySelectorAll('table.error-log-table i.toggle');
+		toggles.forEach(function (item, i) {
+			if (item.id === 'toggle-total') return;
+			if (controlErrorLog.collapsed) {
+				item.classList.remove('celicon-plus-square');
+				item.classList.add('celicon-minus-square');
+			} else {
+				item.classList.remove('celicon-minus-square');
+				item.classList.add('celicon-plus-square');
+			}
+		});
+		controlErrorLog.collapsed = !controlErrorLog.collapsed;
+	},
 	showLog: function() {
 		if (controlErrorLog.isEmpty(controlErrorLog.window)) {
 			controlErrorLog.window = new MODx.Window({
@@ -22,6 +57,7 @@ Ext.extend(ControlErrorLog, Ext.Component, {
 				title: _("error_log") ? _("error_log") : 'Error log',
 				stateful: false,
 				buttonAlign: "left",
+				//bodyCssClass: controlErrorLog.config.format_output ? '' : 'raw-output',
 				tbar: [{
 					xtype: 'controlerrorlog-combo-logfiles',
 					width: 250,
@@ -49,26 +85,34 @@ Ext.extend(ControlErrorLog, Ext.Component, {
 					tooltip: _('errorlog_download'),
 					//hidden: !controlErrorLog.config.tooLarge,
 					handler: function () {
-						location.href = controlErrorLog.config.connector_url + "?action=mgr/errorlog/download&HTTP_MODAUTH=" + MODx.siteId + "&file=" + Ext.getCmp('controlerrorlog-logfiles').getValue();
+						location.href = controlErrorLog.config.connector_url + "?action=mgr/download&HTTP_MODAUTH=" + MODx.siteId + "&file=" + Ext.getCmp('controlerrorlog-logfiles').getValue();
 					},
 					scope: this
 				}, {
 					xtype: 'label',
 					id: 'errorlog-filesize-label',
 					style: 'font-weight: bold'
+				},  '->', {
+					xtype: 'label',
+					id: 'errorlog-count-label',
+					style: 'font-weight: bold',
+					templ: _('errorlog_total_messages'),
+					text: _('errorlog_total_messages') + controlErrorLog.config.messages_count,
+					hidden: !controlErrorLog.config.format_output
+
 				}],
 				items: [
 					{
-						xtype: "textarea",
+						xtype: controlErrorLog.config.format_output ? "panel" : 'textarea',
 						name: "log",
 						hideLabel: true,
 						id: "window-errorlog-content",
-						style: 'margin-top: 10px;',
+						//style: 'margin-top: 10px;',
 						//value: controlErrorLog.config.log,
 						readOnly: true,
-						height: "94%",
-						width: "99%",
-						hidden: !controlErrorLog.config.tooLarge
+						height: controlErrorLog.config.format_output ? "99%" : "100%",
+						width: "100%",
+						hidden: controlErrorLog.config.tooLarge
 					}, {
 						html: _("errorlog_too_large") ? _("errorlog_too_large") : 'The error log  is too large to be viewed. You can download it via the button below.',
 						id: "too-large-text",
@@ -131,7 +175,7 @@ Ext.extend(ControlErrorLog, Ext.Component, {
 						MODx.Ajax.request({
 							url: controlErrorLog.config.connector_url,
 							params: {
-								action: "mgr/errorlog/clear",
+								action: "mgr/clear",
 								file:  Ext.get('controlerrorlog-logfiles').getValue()
 							},
 							listeners: {
@@ -148,7 +192,7 @@ Ext.extend(ControlErrorLog, Ext.Component, {
 											Ext.getCmp('errorlog-filesize-label').setText(r.object.size);
 										}
 										if (r.object.name == 'error.log') {
-											document.getElementById("errorlog-link").className = "errorlog-empty";
+											document.getElementById("errorlog-link").className = "celicon-check-circle";
 										}
 									}
 								},
@@ -171,7 +215,13 @@ Ext.extend(ControlErrorLog, Ext.Component, {
 				},
 				_reset: function(r) {
 					const log = Ext.getCmp("window-errorlog-content");
-					log.setValue(r.log);
+					if (controlErrorLog.config.format_output) {
+						document.querySelectorAll('table.error-log-table tbody tr').forEach(function (item){
+							item.remove();
+						});
+					} else {
+						log.setValue(r.log);
+					}
 					// controlErrorLog.config.log = r.log;
 					Ext.getCmp("errorlog-clear-btn").disable();
 					Ext.getCmp("errorlog-copy-btn").disable();
@@ -183,44 +233,56 @@ Ext.extend(ControlErrorLog, Ext.Component, {
 						Ext.getCmp("errorlog-last-lines-content").hide();
 						controlErrorLog.config.tooLarge = false;
 					}
+					let countLabel = Ext.getCmp('errorlog-count-label');
+					countLabel.setText(countLabel.templ + '0')
 				},
 				_refresh: function() {
 					MODx.Ajax.request({
 						url: controlErrorLog.config.connector_url,
 						params: {
-							action: "mgr/errorlog/get",
+							action: "mgr/get",
 							file: Ext.get('controlerrorlog-logfiles').getValue()
 						},
 						listeners: {
 							"success": {
 								fn: function (r) {
 									controlErrorLog.config = r.object;
-
 									//Ext.getCmp("window-errorlog-content").setValue(r.object.log);
 									Ext.getCmp("errorlog-copy-btn").disable();
 									if (controlErrorLog.config.empty) {
 										Ext.getCmp("errorlog-clear-btn").disable();
 										if (r.object.name == 'error.log') {
-											document.getElementById("errorlog-link").className = "errorlog-empty";
+											document.getElementById("errorlog-link").className = "celicon-check-circle";
 										} else if (controlErrorLog.config.allow_copy_deletion) {
 											Ext.getCmp("errorlog-clear-btn").enable();
 										}
 									} else {
 										Ext.getCmp("errorlog-clear-btn").enable();
 										if (r.object.name == 'error.log') {
-											document.getElementById("errorlog-link").className = "errorlog-notempty";
+											document.getElementById("errorlog-link").className = "celicon-warning";
 											Ext.getCmp("errorlog-copy-btn").enable();
 										}
 									}
 									Ext.getCmp('errorlog-filesize-label').setText(r.object.size);
+									let countLabel = Ext.getCmp('errorlog-count-label');
 									if (controlErrorLog.config.tooLarge) {
 										const errorlog_last_lines = _("errorlog_last_lines") ? _("errorlog_last_lines", {last: controlErrorLog.config.last}) : 'The last '+controlErrorLog.config.last+' lines.';
+										Ext.getCmp('errorlog-window').body.addClass('raw-output');
 										Ext.getCmp("window-errorlog-content").hide();
 										Ext.getCmp("too-large-text").show();
 										Ext.getCmp("errorlog-last-lines").setText(errorlog_last_lines).show();
 										Ext.getCmp("errorlog-last-lines-content").setValue(r.object.log).show();
+										countLabel.hide();
 									} else {
-										Ext.getCmp("window-errorlog-content").setValue(r.object.log).show();
+										Ext.getCmp("window-errorlog-content").show();
+										if (controlErrorLog.config.format_output) {
+											Ext.getCmp("window-errorlog-content").update(r.object.log);
+											Ext.getCmp('errorlog-window').body.removeClass('raw-output');
+											countLabel.show();
+											countLabel.setText(countLabel.templ + r.object.messages_count)
+										} else {
+											Ext.getCmp("window-errorlog-content").setValue(r.object.log).show();
+										}
 										Ext.getCmp("too-large-text").hide();
 										Ext.getCmp("errorlog-last-lines").hide();
 										Ext.getCmp("errorlog-last-lines-content").hide();
@@ -235,7 +297,7 @@ Ext.extend(ControlErrorLog, Ext.Component, {
 					MODx.Ajax.request({
 						url: controlErrorLog.config.connector_url,
 						params: {
-							action: "mgr/errorlog/copy"
+							action: "mgr/copy"
 						},
 						listeners: {
 							"success": {
@@ -258,13 +320,13 @@ Ext.extend(ControlErrorLog, Ext.Component, {
 		controlErrorLog.window.hidden ? controlErrorLog.window.show(Ext.EventObject.target) : controlErrorLog.window.hide();
 	},
 	getClass: function(empty) {
-		return empty ? "errorlog-empty" : "errorlog-notempty";
+		return empty ? "celicon-check-circle" : "celicon-warning";
 	},
 	refreshLog: function() {
 		MODx.Ajax.request({
 			url: controlErrorLog.config.connector_url,
 			params: {
-				action: "mgr/errorlog/get"
+				action: "mgr/get"
 			},
 			listeners: {
 				success: {
@@ -289,7 +351,7 @@ controlErrorLog.combo.Logfiles = function(config) {
 		maxHeight: 200,
 		url: controlErrorLog.config.connector_url,
 		baseParams: {
-			action: 'mgr/errorlog/getfiles'
+			action: 'mgr/getfiles'
 		},
 		name: 'logfiles',
 		hiddenName: 'logfiles',

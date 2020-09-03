@@ -8,7 +8,7 @@ $tmp = array(
 		'description' => '',
 		'events' => array(
 			'OnManagerPageBeforeRender' => array(),
-			'OnWebPageComplete' => array(),
+			'OnBeforeRegisterClientScripts' => array(),
 		)
 	)
 );

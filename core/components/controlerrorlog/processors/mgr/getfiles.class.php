@@ -1,5 +1,5 @@
 <?php
-include_once dirname(dirname(__FILE__)) . '/controlerrorlog.php';
+include_once dirname(__DIR__) . '/controlerrorlog.php';
 
 /**
  * Grab and output the error log
@@ -19,7 +19,7 @@ class celSystemErrorLogGetFilesProcessor extends controlErrorLogProcessor
         }
         $files = [['id' => 'error.log', 'name' => 'error.log']];
         foreach (new DirectoryIterator($this->getLogPath()) as $fileInfo) {
-            if ($fileInfo->isFile() && $fileInfo->getExtension() == 'log' && $fileInfo->getFilename() !== 'error.log') {
+            if ($fileInfo->isFile() && $fileInfo->getExtension() === 'log' && $fileInfo->getFilename() !== 'error.log') {
                 $files[] = ['id' => $fileInfo->getFilename(), 'name' => $fileInfo->getFilename()];
             }
         }

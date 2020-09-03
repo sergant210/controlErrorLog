@@ -11,7 +11,7 @@ header('Content-Type:text/html;charset=utf-8');
 require_once 'build.config.php';
 
 /* define sources */
-$root = dirname(dirname(__FILE__)) . '/';
+$root = dirname(__DIR__) . '/';
 $sources = array(
 	'root' => $root,
 	'build' => $root . '_build/',
@@ -267,7 +267,7 @@ $builder->setPackageAttributes(array(
 	'changelog' => file_get_contents($sources['docs'] . 'changelog.txt'),
 	'license' => file_get_contents($sources['docs'] . 'license.txt'),
 	'readme' => file_get_contents($sources['docs'] . 'readme.txt'),
-//	'chunks' => $BUILD_CHUNKS,
+	'chunks' => $BUILD_CHUNKS,
 	'setup-options' => array(
 		'source' => $sources['build'] . 'setup.options.php',
 	),

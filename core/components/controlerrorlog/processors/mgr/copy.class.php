@@ -1,5 +1,5 @@
 <?php
-include_once dirname(dirname(__FILE__)) . '/controlerrorlog.php';
+include_once dirname(__DIR__) . '/controlerrorlog.php';
 
 /**
  * Grab and output the error log
