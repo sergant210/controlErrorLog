@@ -23,6 +23,7 @@ class controlErrorLogClearProcessor extends controlErrorLogProcessor
         $file = $this->getLogPath($this->getProperty('file', 'error.log'));
         $content = '';
         $isDeleted = false;
+
         if (file_exists($file)) {
             if ($this->modx->getOption('controlerrorlog.allow_copy_deletion', null, true) && basename($file) !== 'error.log') {
                 $success = unlink($file);

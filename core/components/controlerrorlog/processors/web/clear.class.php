@@ -21,6 +21,7 @@ class controlErrorLogWebClearProcessor extends controlErrorLogProcessor
         /** @var modProcessorResponse $response */
         $response = $this->modx->runProcessor('mgr/clear', $this->getProperties(), ['processors_path' => $path]);
 
+        $response->response['object']['messages_count'] = 0;
         unset($response->response['object']['isDeleted']);
 
         return $response->response;

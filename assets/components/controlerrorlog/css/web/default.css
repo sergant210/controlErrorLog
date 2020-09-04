@@ -104,8 +104,8 @@
 #side-panel-wrapper.expanded .side-buttons {
 	left: 919px;
 }
-.side-buttons a {
-	text-decoration: none;
+.side-buttons span {
+	cursor: pointer;
 }
 .side-buttons li {
 	padding-bottom: 10px;

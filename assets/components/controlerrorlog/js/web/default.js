@@ -83,7 +83,7 @@ controlErrorLog.request = function request(action) {
 		let responseObj = xhr.response;
 
 		if (xhr.status === 200 && responseObj.success) {
-			const format = !!responseObj.object.format_output;
+			const format = controlErrorLog.config.format_output;
 			let content = '';
 			let preClass = '';
 			controlErrorLog.empty = responseObj.object.empty;
@@ -93,7 +93,13 @@ controlErrorLog.request = function request(action) {
 				preClass = 'too-large'
 			}
 			content += format && !responseObj.object.tooLarge ? responseObj.object.log : `<pre class="${preClass}">${responseObj.object.log}</pre>`;
-			logErrorPanelBody.innerHTML = content;
+
+			if (format && action === 'web/clear') {
+				let tableBody = document.querySelector('table.error-log-table tbody');
+				tableBody.innerHTML =  '';
+			} else {
+				logErrorPanelBody.innerHTML =  content;
+			}
 			let footerContent = '';
 			if (format && !responseObj.object.tooLarge) {
 				footerContent = '<span>' + logErrorPanelFooter.getAttribute('data-records') + responseObj.object.messages_count + '</span>';
