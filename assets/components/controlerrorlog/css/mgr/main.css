@@ -12,14 +12,16 @@
 
 .celicon {
 	font-family: FontAwesome, 'icomoon' !important;
+	display: inline-block;
 	speak: none;
 	font-size: 1.33333em;
 	font-style: normal;
 	font-weight: normal;
 	font-variant: normal;
-	text-transform: none;
+	/*text-transform: none;*/
 	line-height: 1;
 	vertical-align: -21%;
+	text-rendering: auto;
 	/* Better Font Rendering =========== */
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -158,7 +160,7 @@
 .text-error {
 	color: #ce0114;;
 }
-.error-log-table tr.error-message td:first-child div{
+.error-log-table tr.error-message td:first-child > div{
 	background-color: #ff8c8c;
 	height: 100%;
 	position: absolute;
@@ -166,7 +168,7 @@
 	left:0;
 	width: 5px;
 }
-.error-log-table tr.warn-message td:first-child div{
+.error-log-table tr.warn-message td:first-child > div{
 	background-color: #fae6a7;
 	height: 100%;
 	position: absolute;
@@ -174,7 +176,7 @@
 	left:0;
 	width: 5px;
 }
-.error-log-table tr.debug-message td:first-child div{
+.error-log-table tr.debug-message td:first-child > div{
 	background-color: #bfecf5;
 	height: 100%;
 	position: absolute;
@@ -182,7 +184,7 @@
 	left:0;
 	width: 5px;
 }
-.error-log-table tr.info-message td:first-child div{
+.error-log-table tr.info-message td:first-child > div{
 	background-color: #c2eccb;
 	height: 100%;
 	position: absolute;
@@ -190,7 +192,7 @@
 	left:0;
 	width: 5px;
 }
-.error-log-table tr.fatal-message td:first-child div{
+.error-log-table tr.fatal-message td:first-child > div{
 	background-color: #c80000;
 	height: 100%;
 	position: absolute;

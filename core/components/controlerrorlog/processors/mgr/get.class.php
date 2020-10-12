@@ -14,6 +14,8 @@ class controlErrorLogGetProcessor extends controlErrorLogProcessor
     protected $count = 0;
     /** @var bool */
     protected $defExists = false;
+    /** @var bool */
+    protected $fromCache = false;
 
     public function checkPermissions()
     {
@@ -64,6 +66,8 @@ class controlErrorLogGetProcessor extends controlErrorLogProcessor
             'messages_count' => $this->count ?: 0,
             'format_output' => (bool)$formatOutput,
             'collapsed' => false,
+            'from_cache' => $this->fromCache,
+            'tpl' => $this->render([], false),
         ];
 
         return $this->success('', $response);
@@ -78,7 +82,6 @@ class controlErrorLogGetProcessor extends controlErrorLogProcessor
         if ($this->modx->getOption('controlerrorlog.cache_table', null, false) && $content = $this->getFromCache()) {
             return $content;
         }
-
         $generator = $this->readTheFile($file);
 
         $messages = [];
@@ -115,6 +118,7 @@ class controlErrorLogGetProcessor extends controlErrorLogProcessor
         if ($data = $this->modx->getCacheManager()->get('errorlog')) {
             $hashFile = md5_file($this->file);
             if ($data['hash'] === $hashFile) {
+                $this->fromCache = true;
                 $this->count = $data['count'];
                 return $data['content'];
             }
@@ -124,13 +128,16 @@ class controlErrorLogGetProcessor extends controlErrorLogProcessor
 
     /**
      * @param array $data
+     * @param bool $cacheable
      * @return string
+     * @throws \SmartyException
      */
-    protected function render(array $data)
+    protected function render(array $data, $cacheable = true)
     {
-        $templatePath = dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR;
-        $this->modx->getService('smarty', 'smarty.modSmarty');
-        $this->modx->smarty->setCachePath('mgr/smarty/controlerrorlog/');
+        $templatePath = dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR;
+
+        $smarty = class_exists(Smarty::class) ? new Smarty : $this->modx->getService('smarty', 'smarty.modSmarty');
+        $smarty->setCompileDir($this->modx->getOption(xPDO::OPT_CACHE_PATH) . 'mgr/smarty/controlerrorlog/');
         $tpl = $this->modx->getOption('controlerrorlog.tpl', null, 'error_table.tpl', true);
 
         $lexicon = [
@@ -143,17 +150,18 @@ class controlErrorLogGetProcessor extends controlErrorLogProcessor
         ];
 
         if (file_exists($templatePath . $tpl)) {
-            $this->modx->smarty->assign('messages', $data);
-            $this->modx->smarty->assign('defExists', $this->defExists);
-            $this->modx->smarty->assign('lexicon', $lexicon);
-            $this->modx->smarty->assign('dateFormat', $this->modx->getOption('date_format', null, '%d.%m.%Y', true));
+            $smarty->assign('messages', $data);
+            $smarty->assign('defExists', $this->defExists);
+            $smarty->assign('lexicon', $lexicon);
+            $smarty->assign('dateFormat', $this->modx->getOption('date_format', null, '%d.%m.%Y', true));
+            $smarty->assign('fromCache', $this->fromCache);
 
-            $content = $this->modx->smarty->fetch($templatePath . $tpl);
+            $content = $smarty->fetch($templatePath . $tpl);
 
             $hash = md5_file($this->file);
             $payload = ['hash' => $hash, 'count' => $this->count, 'content' => $content];
 
-            if ($this->modx->getOption('controlerrorlog.cache_table', null, false)) {
+            if ($this->modx->getOption('controlerrorlog.cache_table', null, false) && $cacheable) {
                 $this->modx->getCacheManager()->set('errorlog', $payload);
             }
 

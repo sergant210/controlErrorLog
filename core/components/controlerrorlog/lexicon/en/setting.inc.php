@@ -23,3 +23,5 @@ $_lang['setting_controlerrorlog.css_file'] = 'Css file';
 $_lang['setting_controlerrorlog.css_file_desc'] = 'URL of a css file for the frontend.';
 $_lang['setting_controlerrorlog.js_file'] = 'Js file';
 $_lang['setting_controlerrorlog.js_file_desc'] = 'URL of a javascript file for the frontend.';
+$_lang['setting_controlerrorlog.enable'] = 'Enable';
+$_lang['setting_controlerrorlog.enable_desc'] = 'Enable the component in the backend.';

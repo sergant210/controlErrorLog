@@ -58,6 +58,11 @@ $tmp = array(
         'value' => '/assets/components/controlerrorlog/js/web/default.js',
         'area' => 'controlerrorlog.main',
     ),
+    'enable' => array(
+        'xtype' => 'combo-boolean',
+        'value' => true,
+        'area' => 'controlerrorlog.main',
+    ),
 );
 
 foreach ($tmp as $k => $v) {

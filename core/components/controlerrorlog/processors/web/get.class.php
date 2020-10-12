@@ -9,7 +9,7 @@ class controlErrorLogWebGetProcessor extends controlErrorLogProcessor
 {
     public function checkPermissions()
     {
-        return $this->modx->hasPermission('error_log_view') && $this->checkToken();
+        return $this->checkToken() && $this->modx->hasPermission('error_log_view');
     }
 
     public function process()
@@ -18,9 +18,15 @@ class controlErrorLogWebGetProcessor extends controlErrorLogProcessor
         /** @var modProcessorResponse $response */
         $response = $this->modx->runProcessor('mgr/get', $this->getProperties(), ['processors_path' => $path]);
         $object = [];
-        foreach (['tooLarge', 'size', 'empty', 'last', 'log', 'messages_count', 'format_output'] as $key) {
+        foreach (['tooLarge', 'size', 'empty', 'log', 'messages_count'] as $key) {
             $object[$key] = $response->response['object'][$key];
         }
+        $object['config'] = [
+            'format_output' => $response->response['object']['format_output'],
+            'last' => $response->response['object']['last'],
+            'from_cache' => $response->response['object']['from_cache'],
+            'tpl' => $response->response['object']['tpl'],
+        ];
         $response->response['object'] = $object;
         if ($object['tooLarge']) {
             $response->response['message'] = $this->modx->lexicon('errorlog_web_too_large');

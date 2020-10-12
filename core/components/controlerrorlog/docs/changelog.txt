@@ -1,5 +1,11 @@
 Changelog for controlErrorLog.
 
+1.4.1-beta
+==============
+- Added system setting "enable" to manage controlErrorLog in the backend.
+- Fixed a bug with the too large mode.
+- Return back PHP5 support.
+
 1.4.0-beta
 ==============
 - Added the ability to format the error log content.

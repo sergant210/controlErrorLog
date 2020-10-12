@@ -23,3 +23,5 @@ $_lang['setting_controlerrorlog.css_file'] = 'Css файл';
 $_lang['setting_controlerrorlog.css_file_desc'] = 'URL файла стилей для фронтэнда.';
 $_lang['setting_controlerrorlog.js_file'] = 'Js файл';
 $_lang['setting_controlerrorlog.js_file_desc'] = 'URL файла скриптов для фронтэнда.';
+$_lang['setting_controlerrorlog.enable'] = 'Включить';
+$_lang['setting_controlerrorlog.enable_desc'] = 'Включает компонент в админке.';

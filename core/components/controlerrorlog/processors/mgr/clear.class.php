@@ -30,6 +30,9 @@ class controlErrorLogClearProcessor extends controlErrorLogProcessor
                 $isDeleted = true;
             } else {
                 $success = file_put_contents($file, $content);
+                if ($this->modx->getOption('controlerrorlog.cache_table', null, false)) {
+                    $this->modx->getCacheManager()->delete('errorlog');
+                }
             }
             if ($success === false) {
                 return $this->failure('Error on deleting/clearing the file.');

@@ -226,6 +226,8 @@ Ext.extend(ControlErrorLog, Ext.Component, {
 					Ext.getCmp("errorlog-clear-btn").disable();
 					Ext.getCmp("errorlog-copy-btn").disable();
 					if (controlErrorLog.config.tooLarge) {
+						Ext.getCmp('errorlog-window').body.removeClass('raw-output');
+						log.update(controlErrorLog.config.tpl);
 						log.show();
 						Ext.getCmp("too-large-text").hide();
 						// Ext.getCmp("errorlog-download-btn").hide();

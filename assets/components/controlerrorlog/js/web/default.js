@@ -5,7 +5,12 @@ document.getElementById('side-button-open').addEventListener("click", () => {
 document.getElementById('side-panel-close-button').addEventListener("click", () => {
 	logErrorPanel.classList.toggle('expanded');
 });
-document.getElementById('side-button-refresh').addEventListener("click", () => {
+document.getElementById('side-button-refresh').addEventListener("click", function() {
+	let i = this.children[0];
+	i.classList.add('spin');
+	setTimeout(() => {
+		i.classList.remove('spin');
+	}, 300);
 	controlErrorLog.request('web/get');
 });
 document.getElementById('side-button-clear').addEventListener("click", () => {
@@ -86,7 +91,7 @@ controlErrorLog.request = function request(action) {
 			const format = controlErrorLog.config.format_output;
 			let content = '';
 			let preClass = '';
-			controlErrorLog.empty = responseObj.object.empty;
+			let footerContent = '';
 
 			if (responseObj.object.tooLarge) {
 				content = responseObj.message;
@@ -94,17 +99,26 @@ controlErrorLog.request = function request(action) {
 			}
 			content += format && !responseObj.object.tooLarge ? responseObj.object.log : `<pre class="${preClass}">${responseObj.object.log}</pre>`;
 
-			if (format && action === 'web/clear') {
-				let tableBody = document.querySelector('table.error-log-table tbody');
-				tableBody.innerHTML =  '';
-			} else {
-				logErrorPanelBody.innerHTML =  content;
-			}
-			let footerContent = '';
-			if (format && !responseObj.object.tooLarge) {
-				footerContent = '<span>' + logErrorPanelFooter.getAttribute('data-records') + responseObj.object.messages_count + '</span>';
+			if (format) {
+				if (action === 'web/clear') {
+					if (controlErrorLog.tooLarge) {
+						logErrorPanelBody.innerHTML = controlErrorLog.config.tpl;
+					} else {
+						let tableBody = document.querySelector('table.error-log-table tbody');
+						tableBody.innerHTML = '';
+					}
+				} else {
+					logErrorPanelBody.innerHTML = content;
+				}
+
+				if (!responseObj.object.tooLarge) {
+					footerContent = '<span>' + logErrorPanelFooter.getAttribute('data-records') + responseObj.object.messages_count + '</span>';
+				}
 			}
 			logErrorPanelFooter.innerHTML = footerContent + responseObj.object.size;
+			['tooLarge', 'size', 'empty', 'log', 'messages_count'].forEach(function(item) {
+				controlErrorLog[item] = responseObj.object[item];
+			});
 			controlErrorLog.setStatusIcons(controlErrorLog.empty);
 		} else {
 			alert(xhr.response.message);
