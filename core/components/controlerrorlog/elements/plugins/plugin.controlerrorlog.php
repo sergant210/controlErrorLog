@@ -1,4 +1,5 @@
 <?php
+/** @var modX $modx */
 switch ($modx->event->name) {
     case 'OnManagerPageBeforeRender':
         if ($modx->getOption('controlerrorlog.enable', null, true) && $modx->hasPermission('error_log_view')) {
@@ -16,7 +17,8 @@ switch ($modx->event->name) {
         }
         break;
     case 'OnBeforeRegisterClientScripts':
-        if ($modx->getOption('controlerrorlog.control_frontend', null, true) && $modx->hasPermission('error_log_view')) {
+        $isAuth = $modx->user->isAuthenticated('mgr') && $modx->user->isAuthenticated($modx->context->key);
+        if ($isAuth && $modx->getOption('controlerrorlog.control_frontend', null, true) && $modx->hasPermission('error_log_view')) {
             $modx->lexicon->load('controlerrorlog:default');
             $modx->regClientHTMLBlock($modx->getChunk('errorLogPanel.tpl'));
 
@@ -28,11 +30,11 @@ switch ($modx->event->name) {
                 $modx->regClientScript($js);
             }
 
-            if (!isset($_SESSION['controlerrorlog']['token']) && $modx->user->isAuthenticated($modx->context->key)) {
+            if (!isset($_SESSION['controlerrorlog']['token'])) {
                 $_SESSION['controlerrorlog']['token'] = md5(MODX_HTTP_HOST . time() . mt_rand(1, 1000));
             }
             $path = $modx->getOption('controlerrorlog_core_path', null, $modx->getOption('core_path') . 'components/controlerrorlog/') . 'processors/';
-            $response = $modx->runProcessor('web/get', ['includeContent' => false, 'token' => $_SESSION['controlerrorlog']['token']], ['processors_path' => $path]);
+            $response = $modx->runProcessor('web/get', ['includeContent' => false, 'token' => @$_SESSION['controlerrorlog']['token']], ['processors_path' => $path]);
             $rObject = $response->getObject();
             $config = json_encode($rObject['config']);
             $connectorUrl = $assetsUrl . 'api.php';
@@ -47,7 +49,7 @@ switch ($modx->event->name) {
                 size: '{$rObject["size"]}',
                 empty: {$rObject["empty"]},
                 log: '{$rObject["log"]}',
-                messages_count: {$rObject["messages_count"]},
+                messages_count: {$rObject["messages_count"]}
             }";
             $_html = "<script>\r\n\tlet controlErrorLog = " . $resObj . ";\r\n</script>";
             $modx->regClientStartupHTMLBlock($_html);
