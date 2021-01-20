@@ -373,6 +373,6 @@ Ext.onReady(function() {
 	errorlogLi.innerHTML = "<a id=\"errorlog-link\" class=\""+controlErrorLog.getClass(controlErrorLog.config.empty)+"\" href=\"javascript:controlErrorLog.showLog()\" title=\""+ title +"\"><i" +
 		" class=\"celicon\"></i></a>";
 	errorlogLi.className = "errorlog-li";
-	usermenuUl.insertBefore(errorlogLi, usermenuUl.firstChild);
-	if (controlErrorLog.config.auto_refresh) setInterval(controlErrorLog.refreshLog, controlErrorLog.config.refresh_freq);
+	if (usermenuUl) { usermenuUl.insertBefore(errorlogLi, usermenuUl.firstChild); }
+	if (controlErrorLog.config.auto_refresh) { setInterval(controlErrorLog.refreshLog, controlErrorLog.config.refresh_freq) }
 });
