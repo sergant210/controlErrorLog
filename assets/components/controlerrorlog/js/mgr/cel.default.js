@@ -370,9 +370,14 @@ Ext.onReady(function() {
 		errorlogLi = document.createElement("LI"),
 		title = _("errors_title") ? _("errors_title") : 'Open the error log in a modal window';
 
-	errorlogLi.innerHTML = "<a id=\"errorlog-link\" class=\""+controlErrorLog.getClass(controlErrorLog.config.empty)+"\" href=\"javascript:controlErrorLog.showLog()\" title=\""+ title +"\"><i" +
-		" class=\"celicon\"></i></a>";
-	errorlogLi.className = "errorlog-li";
-	if (usermenuUl) { usermenuUl.insertBefore(errorlogLi, usermenuUl.firstChild); }
-	if (controlErrorLog.config.auto_refresh) { setInterval(controlErrorLog.refreshLog, controlErrorLog.config.refresh_freq) }
+	if (usermenuUl) {
+		errorlogLi.innerHTML = "<a id=\"errorlog-link\" class=\""+controlErrorLog.getClass(controlErrorLog.config.empty)+"\" href=\"javascript:controlErrorLog.showLog()\" title=\""+ title +"\"><i" +
+			" class=\"celicon\"></i></a>";
+		errorlogLi.className = "errorlog-li";
+
+		usermenuUl.insertBefore(errorlogLi, usermenuUl.firstChild);
+		if (controlErrorLog.config.auto_refresh) {
+			setInterval(controlErrorLog.refreshLog, controlErrorLog.config.refresh_freq)
+		}
+	}
 });
