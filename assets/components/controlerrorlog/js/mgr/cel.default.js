@@ -192,7 +192,7 @@ Ext.extend(ControlErrorLog, Ext.Component, {
 											Ext.getCmp('errorlog-filesize-label').setText(r.object.size);
 										}
 										if (r.object.name == 'error.log') {
-											document.getElementById("errorlog-link").className = "celicon-check-circle";
+											document.getElementById("errorlog-link").className = controlErrorLog.getClass(controlErrorLog.config.empty);
 										}
 									}
 								},
@@ -254,14 +254,14 @@ Ext.extend(ControlErrorLog, Ext.Component, {
 									if (controlErrorLog.config.empty) {
 										Ext.getCmp("errorlog-clear-btn").disable();
 										if (r.object.name == 'error.log') {
-											document.getElementById("errorlog-link").className = "celicon-check-circle";
+											document.getElementById("errorlog-link").className = controlErrorLog.getClass(controlErrorLog.config.empty);
 										} else if (controlErrorLog.config.allow_copy_deletion) {
 											Ext.getCmp("errorlog-clear-btn").enable();
 										}
 									} else {
 										Ext.getCmp("errorlog-clear-btn").enable();
 										if (r.object.name == 'error.log') {
-											document.getElementById("errorlog-link").className = "celicon-warning";
+											document.getElementById("errorlog-link").className = controlErrorLog.getClass(controlErrorLog.config.empty);
 											Ext.getCmp("errorlog-copy-btn").enable();
 										}
 									}
@@ -322,7 +322,8 @@ Ext.extend(ControlErrorLog, Ext.Component, {
 		controlErrorLog.window.hidden ? controlErrorLog.window.show(Ext.EventObject.target) : controlErrorLog.window.hide();
 	},
 	getClass: function(empty) {
-		return empty ? "celicon-check-circle" : "celicon-warning";
+		let vclass = empty ? "celicon-check-circle " : "celicon-warning ";
+		return vclass + controlErrorLog.config.version_class;
 	},
 	refreshLog: function() {
 		MODx.Ajax.request({
@@ -371,7 +372,8 @@ Ext.onReady(function() {
 		title = _("errors_title") ? _("errors_title") : 'Open the error log in a modal window';
 
 	if (usermenuUl) {
-		errorlogLi.innerHTML = "<a id=\"errorlog-link\" class=\""+controlErrorLog.getClass(controlErrorLog.config.empty)+"\" href=\"javascript:controlErrorLog.showLog()\" title=\""+ title +"\"><i" +
+		errorlogLi.innerHTML = "<a id=\"errorlog-link\" class=\"" + controlErrorLog.getClass(controlErrorLog.config.empty) + "\"" +
+			" href=\"javascript:controlErrorLog.showLog()\" title=\""+ title +"\"><i" +
 			" class=\"celicon\"></i></a>";
 		errorlogLi.className = "errorlog-li";
 

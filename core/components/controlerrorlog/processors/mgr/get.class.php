@@ -68,6 +68,7 @@ class controlErrorLogGetProcessor extends controlErrorLogProcessor
             'collapsed' => false,
             'from_cache' => $this->fromCache,
             'tpl' => $this->render([], false),
+            'version_class' => (int)$this->modx->getOption('settings_version') === 3 ? 'modx3' : 'modx2',
         ];
 
         return $this->success('', $response);
@@ -82,7 +83,7 @@ class controlErrorLogGetProcessor extends controlErrorLogProcessor
         if ($this->modx->getOption('controlerrorlog.cache_table', null, false) && $content = $this->getFromCache()) {
             return $content;
         }
-        $generator = $this->readTheFile($file);
+        $generator = $this->readFile($file);
 
         $messages = [];
         foreach ($generator as $line) {
@@ -115,7 +116,7 @@ class controlErrorLogGetProcessor extends controlErrorLogProcessor
     protected function getFromCache()
     {
         $content = '';
-        if ($data = $this->modx->getCacheManager()->get('errorlog')) {
+        if (($data = $this->modx->getCacheManager()->get('errorlog')) && file_exists($this->file)) {
             $hashFile = md5_file($this->file);
             if ($data['hash'] === $hashFile) {
                 $this->fromCache = true;
@@ -158,15 +159,14 @@ class controlErrorLogGetProcessor extends controlErrorLogProcessor
 
             $content = $smarty->fetch($templatePath . $tpl);
 
-            $hash = md5_file($this->file);
-            $payload = ['hash' => $hash, 'count' => $this->count, 'content' => $content];
-
-            if ($this->modx->getOption('controlerrorlog.cache_table', null, false) && $cacheable) {
+            if ($this->modx->getOption('controlerrorlog.cache_table', null, false) && $cacheable && file_exists($this->file)) {
+                $payload = ['hash' => md5_file($this->file), 'count' => $this->count, 'content' => $content];
                 $this->modx->getCacheManager()->set('errorlog', $payload);
             }
 
             return $content;
         }
+
         return '';
     }
 
@@ -185,7 +185,7 @@ class controlErrorLogGetProcessor extends controlErrorLogProcessor
         unset($logMessage->_content);
     }
 
-    protected function readTheFile($path) {
+    protected function readFile($path) {
         $handle = fopen($path, "rb");
 
         while(!feof($handle)) {
