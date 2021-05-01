@@ -371,7 +371,9 @@ Ext.onReady(function() {
 		title = _("errors_title") ? _("errors_title") : 'Open the error log in a modal window';
 
 	if (usermenuUl) {
-		errorlogLi.innerHTML = "<a id=\"errorlog-link\" class=\""+controlErrorLog.getClass(controlErrorLog.config.empty)+"\" href=\"javascript:controlErrorLog.showLog()\" title=\""+ title +"\"><i" +
+		errorlogLi.innerHTML = "<a id=\"errorlog-link\" class=\"" + controlErrorLog.getClass(controlErrorLog.config.empty) + " " +
+			controlErrorLog.config.version_class +  "\"" +
+			" href=\"javascript:controlErrorLog.showLog()\" title=\""+ title +"\"><i" +
 			" class=\"celicon\"></i></a>";
 		errorlogLi.className = "errorlog-li";
 

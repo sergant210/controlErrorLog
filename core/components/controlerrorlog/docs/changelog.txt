@@ -1,5 +1,10 @@
 Changelog for controlErrorLog.
 
+1.4.3-pl
+==============
+- Fixed hashing of missing log file.
+- Optimized for MODX 3.
+
 1.4.2-pl
 ==============
 - Added check for user menu existence (#27).

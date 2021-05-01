@@ -12,16 +12,14 @@
 
 .celicon {
 	font-family: FontAwesome, 'icomoon' !important;
-	display: inline-block;
 	speak: none;
-	font-size: 1.33333em;
+	font-size: 18px;
 	font-style: normal;
 	font-weight: normal;
 	font-variant: normal;
-	/*text-transform: none;*/
-	line-height: 1;
+	text-transform: none;
+	line-height: 1em;
 	vertical-align: -21%;
-	text-rendering: auto;
 	/* Better Font Rendering =========== */
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -47,7 +45,12 @@
 	content: "\e905";
 }
 
-.errorlog-li a {padding: 0 !important;}
+.errorlog-li a.modx2 {padding: 0 !important;}
+.errorlog-li a.modx3{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
 .errorlog-li a span {color: red; background-color: white;padding: 5px;}
 #errorlog-box {background-color: #FFF;border: 2px solid #DDD;box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);position: absolute;width: 1200px;z-index: 5000;}
 #errorlog-box-title {background-color: #EFEFEF;padding: 10px 5px;margin: 3px;}
@@ -160,7 +163,7 @@
 .text-error {
 	color: #ce0114;;
 }
-.error-log-table tr.error-message td:first-child > div{
+.error-log-table tr.error-message td:first-child div{
 	background-color: #ff8c8c;
 	height: 100%;
 	position: absolute;
@@ -168,7 +171,7 @@
 	left:0;
 	width: 5px;
 }
-.error-log-table tr.warn-message td:first-child > div{
+.error-log-table tr.warn-message td:first-child div{
 	background-color: #fae6a7;
 	height: 100%;
 	position: absolute;
@@ -176,7 +179,7 @@
 	left:0;
 	width: 5px;
 }
-.error-log-table tr.debug-message td:first-child > div{
+.error-log-table tr.debug-message td:first-child div{
 	background-color: #bfecf5;
 	height: 100%;
 	position: absolute;
@@ -184,7 +187,7 @@
 	left:0;
 	width: 5px;
 }
-.error-log-table tr.info-message td:first-child > div{
+.error-log-table tr.info-message td:first-child div{
 	background-color: #c2eccb;
 	height: 100%;
 	position: absolute;
@@ -192,7 +195,7 @@
 	left:0;
 	width: 5px;
 }
-.error-log-table tr.fatal-message td:first-child > div{
+.error-log-table tr.fatal-message td:first-child div{
 	background-color: #c80000;
 	height: 100%;
 	position: absolute;
