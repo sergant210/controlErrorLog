@@ -138,7 +138,6 @@ class controlErrorLogGetProcessor extends controlErrorLogProcessor
         $templatePath = dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR;
 
         $smarty = class_exists(Smarty::class) ? new Smarty : $this->modx->getService('smarty', 'smarty.modSmarty');
-        $smarty->setCompileDir($this->modx->getOption(xPDO::OPT_CACHE_PATH) . 'mgr/smarty/controlerrorlog/');
         $tpl = $this->modx->getOption('controlerrorlog.tpl', null, 'error_table.tpl', true);
 
         $lexicon = [

@@ -1,5 +1,9 @@
 Changelog for controlErrorLog.
 
+1.4.4-pl
+==============
+- Removed the definition of the compilation path for Smarty.
+
 1.4.3-pl
 ==============
 - Fixed hashing of missing log file.
