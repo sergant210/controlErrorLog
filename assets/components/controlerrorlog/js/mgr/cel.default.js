@@ -237,6 +237,8 @@ Ext.extend(ControlErrorLog, Ext.Component, {
 					}
 					let countLabel = Ext.getCmp('errorlog-count-label');
 					countLabel.setText(countLabel.templ + '0')
+					controlErrorLog.config.empty = true;
+					document.getElementById("errorlog-link").className = controlErrorLog.getClass(controlErrorLog.config.empty);
 				},
 				_refresh: function() {
 					MODx.Ajax.request({

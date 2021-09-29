@@ -171,7 +171,10 @@ class controlErrorLogGetProcessor extends controlErrorLogProcessor
 
     private function parseLogMessage($logMessage)
     {
-        if (preg_match('/\(([A-Z]+) (in (.+) )?@ (.*) : (\d+)\)\s+(.+)/s', $logMessage->_content, $match)) {
+        if (preg_match('/^\(([A-Z]+)\)\s*(.*)/s', $logMessage->_content, $match)) {
+            $logMessage->type = $match[1];
+            $logMessage->message = $match[2];
+        } elseif (preg_match('/\(([A-Z]+) (in (.+) )?@ (.*) : (\d+)\)\s+(.+)/s', $logMessage->_content, $match)) {
             $logMessage->type = $match[1];
             $logMessage->def = $match[3];
             $logMessage->file = $match[4];
