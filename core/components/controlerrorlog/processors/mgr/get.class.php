@@ -16,6 +16,8 @@ class controlErrorLogGetProcessor extends controlErrorLogProcessor
     protected $defExists = false;
     /** @var bool */
     protected $fromCache = false;
+    /** @var string */
+    protected $compileDir;
 
     public function checkPermissions()
     {
@@ -25,6 +27,8 @@ class controlErrorLogGetProcessor extends controlErrorLogProcessor
     public function process()
     {
         $this->modx->lexicon->load('controlerrorlog:default');
+        $this->compileDir = MODX_CORE_PATH . 'cache/mgr/controlerrorlog/';
+
         $includeContent = $this->getProperty('includeContent', true);
         $this->file = $this->getLogPath($this->getProperty('file', 'error.log'));
         $content = '';
@@ -67,7 +71,7 @@ class controlErrorLogGetProcessor extends controlErrorLogProcessor
             'format_output' => (bool)$formatOutput,
             'collapsed' => false,
             'from_cache' => $this->fromCache,
-            'tpl' => $this->render([], false),
+            'tpl' => $this->getEmptyTpl(),
             'version_class' => (int)$this->modx->getOption('settings_version') === 3 ? 'modx3' : 'modx2',
         ];
 
@@ -136,8 +140,9 @@ class controlErrorLogGetProcessor extends controlErrorLogProcessor
     protected function render(array $data, $cacheable = true)
     {
         $templatePath = dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR;
-
         $smarty = class_exists(Smarty::class) ? new Smarty : $this->modx->getService('smarty', 'smarty.modSmarty');
+        $compileDir = $smarty->getCompileDir();
+        $smarty->setCompileDir($this->compileDir);
         $tpl = $this->modx->getOption('controlerrorlog.tpl', null, 'error_table.tpl', true);
 
         $lexicon = [
@@ -163,10 +168,11 @@ class controlErrorLogGetProcessor extends controlErrorLogProcessor
                 $this->modx->getCacheManager()->set('errorlog', $payload);
             }
 
-            return $content;
         }
 
-        return '';
+        $smarty->setCompileDir($compileDir);
+
+        return $content ?: '';
     }
 
     private function parseLogMessage($logMessage)
@@ -225,6 +231,24 @@ class controlErrorLogGetProcessor extends controlErrorLogProcessor
             }
         }
         return $size;
+    }
+
+    protected function getEmptyTpl()
+    {
+        return '<table class="error-log-table">
+    <thead>
+    <tr>
+        <th><i class="celicon celicon-minus-square toggle" id="toggle-total" onclick="controlErrorLog.toggleAll(this)"></i></th>
+        <th class="date">Дата</th>
+        <th class="time">Время</th>
+        <th class="type">Тип</th>
+        <th>Файл</th>
+        <th>Строка</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>';
     }
 }
 

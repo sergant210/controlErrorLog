@@ -1,5 +1,9 @@
 Changelog for controlErrorLog.
 
+1.4.6-pl
+==============
+- Fixed a bug with the incorrect Smarty compilation path (#31).
+
 1.4.5-pl
 ==============
 - Fixed a bug with updating the ControlErrorlog icon.
