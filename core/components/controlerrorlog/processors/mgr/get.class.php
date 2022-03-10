@@ -37,7 +37,7 @@ class controlErrorLogGetProcessor extends controlErrorLogProcessor
         $tooLarge = false;
         $lastLines = (int)$this->modx->getOption('controlerrorlog.last_lines', null, 15);
         $formatOutput = $this->modx->getOption('controlerrorlog.format_output', null, true);
-
+        $logsArray = [];
         if (file_exists($this->file)) {
             $size = $this->getSize(true);
             if ($this->size >= 1048576) {
@@ -46,9 +46,12 @@ class controlErrorLogGetProcessor extends controlErrorLogProcessor
                     $content = $this->getLastLines($lastLines);
                 }
             } else {
-                $content = $formatOutput
-                    ? $this->getContent($this->file)
-                    : file_get_contents($this->file);
+                if($formatOutput){
+                    $content = $this->getContent($this->file)['render'];
+                    $logsArray = $this->getContent($this->file)['prepared'];
+                }else{
+                    $content = file_get_contents($this->file);
+                }
             }
             if ($this->getSize() > 0) {
                 $empty = false;
@@ -66,6 +69,7 @@ class controlErrorLogGetProcessor extends controlErrorLogProcessor
             'refresh_freq' => $this->modx->getOption('controlerrorlog.refresh_freq', null, 60) * 1000,
             'connector_url' => $connector_url,
             'log' => $includeContent ? $content : '',
+            'logsArray'=> $logsArray,
             'allow_copy_deletion' => (bool)$this->modx->getOption('controlerrorlog.allow_copy_deletion', null, true),
             'messages_count' => $this->count ?: 0,
             'format_output' => (bool)$formatOutput,
@@ -80,7 +84,7 @@ class controlErrorLogGetProcessor extends controlErrorLogProcessor
 
     /**
      * @param string $file
-     * @return string
+     * @return array
      */
     protected function getContent($file)
     {
@@ -111,7 +115,7 @@ class controlErrorLogGetProcessor extends controlErrorLogProcessor
             $messages[] = $logMessage;
         }
 
-        return $this->render($messages);
+        return ['prepared'=>$messages,'render'=> $this->render($messages)];
     }
 
     /**
